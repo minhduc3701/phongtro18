@@ -67,6 +67,9 @@ body {
   color: white;
 }
 .text-grey {
+  color: #1f1e1e;
+}
+.text-grey-i {
   color: #1f1e1e !important;
 }
 .text-white {
@@ -93,6 +96,11 @@ body {
   clear: both;
   position: relative;
   margin-top: auto;
+  background-color: white;
+  background-image: url(https://images.pexels.com/photos/556663/pexels-photo-556663.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left top;
 }
 .overflow-hiden {
   overflow: hidden;
@@ -1988,4 +1996,12 @@ body {
 .bor-blue-hover:hover {
   border: 2px solid #358df1;
   transition: all 0.5s;
+}
+.text-upper {
+  text-transform: uppercase;
+}
+.block-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }

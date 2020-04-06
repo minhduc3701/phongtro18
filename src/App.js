@@ -1,38 +1,43 @@
 import React, { Fragment } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Menu from "./components/Menu";
+import { Route, Switch, Redirect } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import Routes from "./Routes";
+import MainApp from "./MainApp";
+
+const RestrictedRoute = ({ component: Component, authUser, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      authUser !== -1 ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/signin",
+            state: { from: props.location },
+          }}
+        />
+      )
+    }
+  />
+);
 
 class App extends React.Component {
-  showContentMenus = (routes) => {
-    let result = null;
-    if (routes.length > 0) {
-      result = routes.map((route, index) => {
-        return (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.main}
-          ></Route>
-        );
-      });
-    }
-    return <Switch>{result}</Switch>;
-  };
   render() {
+    let authUser = 0;
+    const { match } = this.props;
+    console.log(this.props);
     return (
       <Fragment>
-        <Router>
-          <Switch>
-            <Route exact path={`/signin`} component={SignIn} />
-            <Route exact path={`/signup`} component={SignUp} />
-          </Switch>
-          {/* <Menu /> */}
-          {this.showContentMenus(Routes)}
-        </Router>
+        <Switch>
+          <Route exact path={`/signin`} component={SignIn} />
+          <Route exact path={`/signup`} component={SignUp} />
+          <RestrictedRoute
+            path={`${match.url}`}
+            authUser={authUser}
+            component={MainApp}
+          />
+        </Switch>
       </Fragment>
     );
   }

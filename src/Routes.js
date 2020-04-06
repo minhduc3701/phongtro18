@@ -1,17 +1,25 @@
-// import React from "react";
+import React from "react";
 
-// import StorePage from "./pages/StorePage/StorePage";
-// import Contact from "./pages/Contact/Contact";
-// import HistoryPage from "./pages/HistoryPage/HistoryPage";
-// import NewsPage from "./pages/NewsPage/NewsPage";
-// import NotFound from "./pages/NotFound/NotFound";
+import Home from "./components/Home";
+import RoomList from "./components/RoomList";
+import RoomDetail from "./components/RoomDetail";
 
-// const routes = [
-//   {
-//     path: "/",
-//     exact: true,
-//     // main: () => <StorePage></StorePage>,
-//   },
-// ];
+const routes = [
+  {
+    path: "/home",
+    exact: true,
+    main: () => <Home />,
+  },
+  {
+    path: "/room-list",
+    exact: true,
+    main: () => <RoomList />,
+  },
+  {
+    path: "/room",
+    exact: true,
+    main: () => <RoomDetail />,
+  },
+];
 
-// export default routes;
+export default routes;

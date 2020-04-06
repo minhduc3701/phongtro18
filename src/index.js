@@ -5,6 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import appReducers from "./appRedux/reducer/index";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import "antd/dist/antd.css";
 
 const store = createStore(
@@ -14,7 +15,11 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Switch>
+        <Route path="/" component={App} />
+      </Switch>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
