@@ -7,19 +7,35 @@ import { createStore } from "redux";
 import appReducers from "./appRedux/reducer/index";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import "antd/dist/antd.css";
+import firebase from "./firebase/index";
+import { createFirestoreInstance } from "redux-firestore";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 
 const store = createStore(
   appReducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
+};
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance, // <- needed if using firestore
+};
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route path="/" component={App} />
-      </Switch>
-    </Router>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Router>
+        <Switch>
+          <Route path="/" component={App} />
+        </Switch>
+      </Router>
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")
 );

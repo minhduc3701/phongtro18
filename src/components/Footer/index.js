@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
-import { UserOutlined, PoweroffOutlined } from "@ant-design/icons";
 import webLogo from "../../assets/motel18-ver2.png";
 
 class Menu extends React.Component {

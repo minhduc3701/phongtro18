@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, Form, Input } from "antd";
+import { Row, Col, Button, Form, Input, notification } from "antd";
 import {
   UserOutlined,
   LockOutlined,
@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import userLogo from "../../assets/f93e57629c.png";
 import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
+import firebase from "../../firebase/index";
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -17,13 +18,39 @@ const formItemLayout = {
 };
 
 class SignIn extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log(values);
-      }
-    });
+  handleSubmit = (values) => {
+    localStorage.clear();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(values.user, values.password)
+      .then((data) => {
+        if (data.user.emailVerified) {
+          document.cookie = `user_id=${data.user.uid}`;
+          localStorage.setItem("uid", data.user.uid);
+          data.user.getIdToken().then((idToken) => {
+            document.cookie = `token=${idToken}`;
+          });
+          this.props.history.push("/home");
+        } else {
+          notification.open({
+            message: "Tài khoản chưa được kích hoạt! Hãy kiểm tra email",
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.code === "auth/wrong-password")
+          notification.open({
+            message: "Sai tài khoản hoặc mật khẩu!",
+          });
+        else if (err.code === "auth/user-not-found")
+          notification.open({
+            message: "Tài khoản của bạn không tồn tại!",
+          });
+        else
+          notification.open({
+            message: "Lỗi không xác định!",
+          });
+      });
   };
 
   render() {
@@ -57,7 +84,7 @@ class SignIn extends React.Component {
             style={{ width: "10em", height: "10em" }}
           />
           <h3 className="text-center font-weight-bold p-b-2">Đăng nhập</h3>
-          <Form onSubmit={this.handleSubmit} style={{ width: "25em" }}>
+          <Form onFinish={this.handleSubmit} style={{ width: "25em" }}>
             <span>Tên đăng nhập</span>
             <FormItem
               name="user"

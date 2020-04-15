@@ -9,7 +9,7 @@ class Menu extends React.Component {
     const userMenu = (
       <ul className="ul-style">
         <li className="p-v-1-i cursor-pointer">
-          <Link className="text-grey-i">
+          <Link to="/profile" className="text-grey-i">
             <UserOutlined className="p-r-1" />
             Hồ sơ cá nhân
           </Link>
@@ -53,24 +53,28 @@ class Menu extends React.Component {
             </Link>
             <div>
               <Link
+                to="/home"
                 style={{ fontSize: "1.2em" }}
                 className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
               >
                 Trang chủ
               </Link>
               <Link
+                to="/room-list"
                 style={{ fontSize: "1.2em" }}
                 className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
               >
                 Danh sách phòng
               </Link>
               <Link
+                to="/image-list"
                 style={{ fontSize: "1.2em" }}
                 className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
               >
                 Hình ảnh
               </Link>
               <Link
+                to="/management"
                 style={{ fontSize: "1.2em" }}
                 className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
               >

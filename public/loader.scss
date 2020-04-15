@@ -5,6 +5,10 @@ body {
   font-size: 13px !important;
 }
 
+hr {
+  margin: 15px 0;
+}
+
 .login-container {
   background: url(https://www.dulichrongachau.vn/image/catalog/Tin-tuc-2017/dia-diem-ngam-binh-minh/nhung-diem-ngam-binh-minh-tuyet-dep-tren-dia-cau-4.jpg)
     no-repeat center;
@@ -80,6 +84,9 @@ body {
 }
 .text-orange {
   color: orange;
+}
+.text-blue {
+  color: #358df1;
 }
 .cursor-not-allow {
   cursor: not-allowed;
@@ -183,6 +190,13 @@ body {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid #00000020;
+  position: relative;
+}
+.block-no-bor {
+  padding: 1em !important;
+  margin-bottom: 2em;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -2004,4 +2018,10 @@ body {
   display: flex !important;
   justify-content: center;
   align-items: center;
+}
+.ant-popover {
+  z-index: 999 !important;
+}
+.justify-flex-end {
+  justify-content: flex-end;
 }

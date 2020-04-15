@@ -1,9 +1,15 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import userLogo from "../../assets/f93e57629c.png";
 import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
+import firebase from "../../firebase/index";
+// import {
+//   SIGNUP_USER_SUCCESS,
+//   SIGNUP_USER_START,
+//   SIGNUP_USER_ERROR,
+// } from "../../constants/ActionType";
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -11,14 +17,40 @@ const formItemLayout = {
   wrapperCol: { xs: 24, sm: 24, md: 24, lg: 24, xl: 24 },
 };
 
-class SignIn extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log(values);
-      }
-    });
+class SingUp extends React.Component {
+  handleSubmit = (values) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(values.email, values.confirm)
+      .then((data) => {
+        const defaultUser = {
+          name: values.user,
+          birth: "",
+          district: "",
+          address: "",
+          phone: "",
+          gender: "",
+          permission: "",
+          avatar: "",
+          rId: "",
+          rName: "",
+          createdAt: new Date().toISOString(),
+          electric: 0,
+          image: "",
+        };
+        firebase.firestore().doc(`/users/${data.user.uid}`).set(defaultUser);
+        firebase.auth().useDeviceLanguage();
+        firebase.auth().currentUser.sendEmailVerification();
+      })
+      .catch((error) => {
+        let err = "";
+        if (error.code === "auth/email-already-in-use")
+          err = "The email address is already in use by another account";
+        else err = "Invalid account information";
+        notification.open({
+          message: err,
+        });
+      });
   };
 
   compareToFirstPassword = (rule, value, callback) => {
@@ -61,7 +93,7 @@ class SignIn extends React.Component {
             style={{ width: "10em", height: "10em" }}
           />
           <h3 className="text-center font-weight-bold">Đăng ký</h3>
-          <Form onSubmit={this.handleSubmit} style={{ width: "25em" }}>
+          <Form onFinish={this.handleSubmit} style={{ width: "25em" }}>
             <span>Email</span>
             <FormItem
               name="email"
@@ -160,4 +192,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+export default SingUp;

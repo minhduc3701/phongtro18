@@ -26,7 +26,6 @@ class App extends React.Component {
   render() {
     let authUser = 0;
     const { match } = this.props;
-    console.log(this.props);
     return (
       <Fragment>
         <Switch>
