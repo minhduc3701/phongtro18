@@ -1,24 +1,18 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   Row,
   Col,
-  Modal,
   Button,
-  Table,
-  Badge,
   Input,
-  Popover,
-  Checkbox,
   Form,
   Upload,
   Select,
+  notification,
 } from "antd";
-import { Link } from "react-router-dom";
-import {
-  UploadOutlined,
-  EditOutlined,
-  ProfileOutlined,
-} from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
+import firebase from "../../firebase/index";
+import { getUser } from "../../appRedux/actions";
+import { connect } from "react-redux";
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -29,23 +23,85 @@ const formItemLayout = {
 };
 
 class Manager extends React.Component {
-  state = {
-    fileList: [],
-  };
+  constructor(props) {
+    super(props);
+    this.props.getUser();
+    this.state = {
+      fileList: [],
+      uploadImage: 0,
+      loading: false,
+    };
+  }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log(values);
-      }
+  handleSubmit = (values) => {
+    this.setState({
+      loading: true,
     });
+    let user_info = JSON.parse(localStorage.getItem("user_info"));
+    firebase
+      .firestore()
+      .collection("rooms")
+      .add({
+        name: values.name,
+        acreage: values.acreage,
+        toilet: values.toilet,
+        item: values.item,
+        image: [],
+        status: "empty",
+        detail: values.intro,
+        createdAt: new Date().toISOString(),
+        userId: values.user,
+        deposit: 0,
+        people: 0,
+      })
+      .then((res) => {
+        this.state.fileList.forEach((fileItem) => {
+          firebase
+            .storage()
+            .ref(`/${res.id}${Date.now().toString()}`)
+            .put(fileItem)
+            .then((ress) => {
+              if (ress) {
+                firebase
+                  .storage()
+                  .ref(ress.metadata.fullPath)
+                  .getDownloadURL()
+                  .then((url) => {
+                    firebase
+                      .firestore()
+                      .collection("rooms")
+                      .doc(res.id)
+                      .update({
+                        image: firebase.firestore.FieldValue.arrayUnion(url),
+                      })
+                      .then((res) => {
+                        this.setState({
+                          uploadImage: this.state.uploadImage + 1,
+                        });
+                        if (
+                          this.state.uploadImage === this.state.fileList.length
+                        ) {
+                          this.props.getData(false);
+                          notification.success({
+                            message: "Tạo phòng thành công!",
+                          });
+                        }
+                      });
+                  });
+              }
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
     let { fileList } = this.state;
+
     const props = {
-      multiple: false,
+      multiple: true,
       listType: "picture",
       onRemove: (file) => {
         this.setState((state) => {
@@ -59,7 +115,7 @@ class Manager extends React.Component {
       },
       beforeUpload: (file) => {
         this.setState((state) => ({
-          fileList: [file],
+          fileList: [...state.fileList, file],
         }));
         return false;
       },
@@ -67,16 +123,16 @@ class Manager extends React.Component {
     };
     return (
       <div className="p-5">
-        <Form>
+        <Form onFinish={this.handleSubmit}>
           <Row>
             <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
               <FormItem
                 {...formItemLayout}
                 name="name"
                 rules={[{ required: true, message: "Nhập tên phòng" }]}
-                label="Tên phòng"
+                label="Tên"
               >
-                <Input placeholder="Name" />
+                <Input placeholder="Name" className="w-90" />
               </FormItem>
             </Col>
             <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
@@ -94,7 +150,7 @@ class Manager extends React.Component {
                 {...formItemLayout}
                 name="price"
                 rules={[{ required: true, message: "Nhập giá phòng" }]}
-                label="Giá phòng"
+                label="Giá"
               >
                 <Input placeholder="Price" />
               </FormItem>
@@ -114,7 +170,7 @@ class Manager extends React.Component {
                 {...formItemLayout}
                 name="water"
                 rules={[{ required: true, message: "Nhập tiền nước" }]}
-                label="Giá nước"
+                label="Nước"
               >
                 <Input placeholder="Water" />
               </FormItem>
@@ -137,7 +193,7 @@ class Manager extends React.Component {
                 {...formItemLayout}
                 name="internet"
                 rules={[{ required: true, message: "Nhập tiền mạng" }]}
-                label="Tiền mạng"
+                label="Mạng"
               >
                 <Input placeholder="Internet" />
               </FormItem>
@@ -150,8 +206,15 @@ class Manager extends React.Component {
                 label="User"
               >
                 <Select placeholder="User" style={{ width: "100%" }}>
-                  <Option value={true}>Gồm nhà vệ sinh</Option>
-                  <Option value={false}>Không bao gồm nhà vệ sinh</Option>
+                  {this.props.loadUser === false &&
+                    this.props.userList.map((item, index) => {
+                      return (
+                        <Option key={index} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    })}
+                  <Option value="empty">Trống</Option>
                 </Select>
               </FormItem>
             </Col>
@@ -163,6 +226,27 @@ class Manager extends React.Component {
                 label="Mô tả"
               >
                 <TextArea rows={5} placeholder="Introduction" />
+              </FormItem>
+            </Col>
+            <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
+              <FormItem
+                {...formItemLayout}
+                name="item"
+                rules={[{ required: true, message: "Chọn người dùng" }]}
+                label="Vật dụng"
+              >
+                <Select
+                  mode="multiple"
+                  placeholder="User"
+                  style={{ width: "100%" }}
+                >
+                  <Option value="cushion">Đệm</Option>
+                  <Option value="wardrobe">Tủ quần áo</Option>
+                  <Option value="table">Bàn</Option>
+                  <Option value="shelve">Kệ</Option>
+                  <Option value="airCondition">Điều hòa</Option>
+                  <Option value="electricWaterHeater">Bình nóng lạnh</Option>
+                </Select>
               </FormItem>
             </Col>
             <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
@@ -184,7 +268,12 @@ class Manager extends React.Component {
               </FormItem>
             </Col>
           </Row>
-          <Button type="primary" htmlType="submit" className='bor-rad-10 float-r'>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="bor-rad-10 float-r"
+            loading={this.state.loading}
+          >
             Tạo
           </Button>
         </Form>
@@ -193,4 +282,11 @@ class Manager extends React.Component {
   }
 }
 
-export default Manager;
+const mapStateToProps = ({ room }) => {
+  return {
+    userList: room.userList,
+    loadUser: room.loadUser,
+  };
+};
+
+export default connect(mapStateToProps, { getUser })(Manager);

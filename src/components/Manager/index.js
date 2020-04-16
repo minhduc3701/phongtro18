@@ -65,6 +65,17 @@ class Manager extends React.Component {
       visibleEditUser: false,
     });
 
+  onGetData = (value) => {
+    this.setState({
+      previewVisible: false,
+      visibleBill: false,
+      visibleEdit: false,
+      visibleCreate: false,
+      visibleUser: false,
+      visibleEditUser: false,
+    });
+  };
+
   render() {
     const actionMenu = (
       <ul className="ul-style">
@@ -247,7 +258,7 @@ class Manager extends React.Component {
           footer={null}
           onCancel={this.handleCancel}
         >
-          <CreateRoom />
+          <CreateRoom getData={this.onGetData} />
         </Modal>
         <Modal
           width="60em"

@@ -53,6 +53,61 @@ class SignIn extends React.Component {
       });
   };
 
+  signInWithGG = () => {
+    let provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+    firebase.auth().useDeviceLanguage();
+    provider.setCustomParameters({
+      login_hint: "user@example.com",
+    });
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log(result);
+        let token = result.credential.accessToken;
+        let user = result.user;
+        console.log(token);
+        console.log(user);
+        if (user) {
+          document.cookie = `user_id=${user.uid}`;
+          localStorage.setItem("uid", user.uid);
+          document.cookie = `token=${token}`;
+          this.props.history.push("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  signInWithFB = () => {
+    let provider = new firebase.auth.FacebookAuthProvider();
+    provider.addScope("email");
+    firebase.auth().useDeviceLanguage();
+    provider.setCustomParameters({
+      display: "popup",
+    });
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log(result);
+        let token = result.credential.accessToken;
+        let user = result.user;
+        console.log(token);
+        console.log(user);
+        if (user) {
+          document.cookie = `user_id=${user.uid}`;
+          localStorage.setItem("uid", user.uid);
+          document.cookie = `token=${token}`;
+          this.props.history.push("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   render() {
     return (
       <Fragment>
@@ -135,7 +190,10 @@ class SignIn extends React.Component {
 
           <Row className="p-t-5">
             <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-              <div className="block m-0 cursor-pointer d-flex-i justify-center align-center">
+              <div
+                onClick={this.signInWithGG}
+                className="block m-0 cursor-pointer d-flex-i justify-center align-center"
+              >
                 <GoogleOutlined
                   style={{ fontSize: "1.8em", paddingRight: "1em" }}
                 />{" "}
@@ -143,7 +201,10 @@ class SignIn extends React.Component {
               </div>
             </Col>
             <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-              <div className="block m-0 cursor-pointer d-flex-i justify-center align-center">
+              <div
+                onClick={this.signInWithFB}
+                className="block m-0 cursor-pointer d-flex-i justify-center align-center"
+              >
                 <FacebookOutlined
                   style={{ fontSize: "1.8em", paddingRight: "1em" }}
                 />{" "}
