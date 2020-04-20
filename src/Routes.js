@@ -19,7 +19,7 @@ const routes = [
     main: () => <RoomList />,
   },
   {
-    path: "/room",
+    path: "/room/:id",
     exact: true,
     main: () => <RoomDetail />,
   },

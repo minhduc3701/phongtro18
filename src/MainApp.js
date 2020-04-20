@@ -7,6 +7,7 @@ import { compose } from "redux";
 import { firestoreConnect, isLoaded } from "react-redux-firebase";
 import { connect } from "react-redux";
 import firebase from "./firebase/index";
+import Loading from "./components/Loading";
 
 class MainApp extends React.Component {
   showContentMenus = (routes) => {
@@ -33,12 +34,13 @@ class MainApp extends React.Component {
         ) || [""];
         let uid = id[2] || "null";
         if (user.uid !== uid) {
+          firebase.auth().signOut();
           localStorage.clear();
           document.cookie =
             "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
           document.cookie =
             "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
-          window.location.href = "http://localhost:3000/signin";
+          window.location.href = "http://localhost:3000/";
         }
       } else {
         localStorage.clear();
@@ -52,9 +54,8 @@ class MainApp extends React.Component {
             name +
             "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000;path=/";
         }
-
         localStorage.clear();
-        window.location.href = "http://localhost:3000/signin";
+        window.location.href = "http://localhost:3000/";
       }
     });
 
@@ -78,7 +79,9 @@ class MainApp extends React.Component {
         })
       );
 
-    return (
+    return !isLoaded(this.props.userApp) ? (
+      <Loading />
+    ) : (
       <Fragment>
         <Menu />
         <div className="max-w-80 m-auto" style={{ minHeight: "80vh" }}>

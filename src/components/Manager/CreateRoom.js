@@ -37,7 +37,6 @@ class Manager extends React.Component {
     this.setState({
       loading: true,
     });
-    let user_info = JSON.parse(localStorage.getItem("user_info"));
     firebase
       .firestore()
       .collection("rooms")
@@ -47,18 +46,23 @@ class Manager extends React.Component {
         toilet: values.toilet,
         item: values.item,
         image: [],
-        status: "empty",
-        detail: values.intro,
+        status: values.user === "empty" ? "empty" : "hired",
+        detail: values.detail,
         createdAt: new Date().toISOString(),
-        userId: values.user,
+        userId: values.user === "empty" ? "empty" : JSON.parse(values.user),
+        price: values.price,
+        motoElec: values.motoElec,
+        water: values.water,
+        internet: values.internet,
         deposit: 0,
         people: 0,
+        electric: 0,
       })
       .then((res) => {
         this.state.fileList.forEach((fileItem) => {
           firebase
             .storage()
-            .ref(`/${res.id}${Date.now().toString()}`)
+            .ref(`/${res.id}/${Date.now().toString()}`)
             .put(fileItem)
             .then((ress) => {
               if (ress) {
@@ -72,7 +76,10 @@ class Manager extends React.Component {
                       .collection("rooms")
                       .doc(res.id)
                       .update({
-                        image: firebase.firestore.FieldValue.arrayUnion(url),
+                        image: firebase.firestore.FieldValue.arrayUnion({
+                          url: url,
+                          name: fileItem.name,
+                        }),
                       })
                       .then((res) => {
                         this.setState({
@@ -99,7 +106,7 @@ class Manager extends React.Component {
 
   render() {
     let { fileList } = this.state;
-
+    console.log(this.state.fileList);
     const props = {
       multiple: true,
       listType: "picture",
@@ -209,7 +216,7 @@ class Manager extends React.Component {
                   {this.props.loadUser === false &&
                     this.props.userList.map((item, index) => {
                       return (
-                        <Option key={index} value={item.id}>
+                        <Option key={index} value={JSON.stringify(item)}>
                           {item.name}
                         </Option>
                       );
@@ -221,7 +228,7 @@ class Manager extends React.Component {
             <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
               <FormItem
                 {...formItemLayout}
-                name="intro"
+                name="detail"
                 rules={[{ required: true, message: "Nhập mô tả" }]}
                 label="Mô tả"
               >
@@ -249,7 +256,7 @@ class Manager extends React.Component {
                 </Select>
               </FormItem>
             </Col>
-            <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
+            <Col className="p-h-1" xl={24} lg={24} md={24} sm={24} xs={24}>
               <FormItem
                 name="image"
                 rules={[
