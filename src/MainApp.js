@@ -8,6 +8,7 @@ import { firestoreConnect, isLoaded } from "react-redux-firebase";
 import { connect } from "react-redux";
 import firebase from "./firebase/index";
 import Loading from "./components/Loading";
+import asyncComponent from "./asyncComponent";
 
 class MainApp extends React.Component {
   showContentMenus = (routes) => {

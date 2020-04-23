@@ -50,10 +50,10 @@ class Manager extends React.Component {
         detail: values.detail,
         createdAt: new Date().toISOString(),
         userId: values.user === "empty" ? "empty" : JSON.parse(values.user),
-        price: values.price,
-        motoElec: values.motoElec,
-        water: values.water,
-        internet: values.internet,
+        price: parseInt(values.price),
+        motoElec: parseInt(values.motoElec),
+        water: parseInt(values.water),
+        internet: parseInt(values.internet),
         deposit: 0,
         people: 0,
         electric: 0,
@@ -106,7 +106,6 @@ class Manager extends React.Component {
 
   render() {
     let { fileList } = this.state;
-    console.log(this.state.fileList);
     const props = {
       multiple: true,
       listType: "picture",

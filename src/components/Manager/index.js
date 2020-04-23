@@ -179,12 +179,15 @@ class Manager extends React.Component {
               >
                 <EditOutlined className="p-r-1" /> Chỉnh sửa người dùng
               </li>
+              {/* <Link to={`/room-edit/${requests.id}`}> */}
               <li
                 onClick={() => this.onOpenEdit()}
                 className="p-v-1-i cursor-pointer"
+                style={{ color: "rgba(0, 0, 0, 0.65)" }}
               >
                 <HomeOutlined className="p-r-1" /> Chỉnh sửa phòng
               </li>
+              {/* </Link> */}
               <li className="p-v-1-i cursor-pointer">
                 <Link style={{ color: "red" }}>
                   <DeleteOutlined className="p-r-1" />
@@ -288,19 +291,17 @@ class Manager extends React.Component {
               footer={null}
               onCancel={this.handleCancel}
             >
-              <EditUser />
+              <EditUser itemId={this.state.itemId} getData={this.onGetData} />
             </Modal>
-            {this.state.visibleEdit ? (
-              <Modal
-                width="60em"
-                title="Sửa phòng"
-                visible={this.state.visibleEdit}
-                footer={null}
-                onCancel={this.handleCancel}
-              >
-                <EditRoom itemId={this.state.itemId} getData={this.onGetData} />
-              </Modal>
-            ) : null}
+            <Modal
+              width="60em"
+              title="Sửa phòng"
+              visible={this.state.visibleEdit}
+              footer={null}
+              onCancel={this.handleCancel}
+            >
+              <EditRoom itemId={this.state.itemId} getData={this.onGetData} />
+            </Modal>
           </div>
         )}
       </Fragment>

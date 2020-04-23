@@ -3,6 +3,9 @@ import {
   GET_USER_LIST_START,
   GET_USER_LIST_SUCCESS,
   GET_USER_LIST_ERROR,
+  GET_USER_DETAIL_START,
+  GET_USER_DETAIL_SUCCESS,
+  GET_USER_DETAIL_ERROR,
   GET_ROOM_DETAIL_LIST_START,
   GET_ROOM_DETAIL_LIST_SUCCESS,
   GET_ROOM_DETAIL_LIST_ERROR,
@@ -35,6 +38,37 @@ export const getUser = () => {
       });
   };
 };
+export const getUserById = (id) => {
+  return (dispatch) => {
+    dispatch({ type: GET_USER_DETAIL_START });
+    firebase
+      .firestore()
+      .collection("users")
+      .where("rId", "==", id)
+      .get()
+      .then((res) => {
+        let userList = null;
+        res.forEach((doc) => {
+          userList = {
+            id: doc.id,
+            name: doc.data().name,
+            district: doc.data().district,
+            phone: doc.data().phone,
+            avatar: doc.data().avatar,
+            address: doc.data().address,
+          };
+        });
+        dispatch({
+          type: GET_USER_DETAIL_SUCCESS,
+          payload: userList,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: GET_USER_DETAIL_ERROR, payload: err });
+      });
+  };
+};
 
 export const getRoomDetail = (id) => {
   return (dispatch) => {
@@ -61,6 +95,9 @@ export const getRoomDetail = (id) => {
           motoElec: res.data().motoElec,
           water: res.data().water,
           internet: res.data().internet,
+          deposit: res.data().deposit,
+          electric: res.data().electric,
+          people: res.data().people,
         };
         dispatch({
           type: GET_ROOM_DETAIL_LIST_SUCCESS,

@@ -83,7 +83,10 @@ class Manager extends React.Component {
                       if (
                         this.state.uploadImage === this.state.fileList.length
                       ) {
-                        this.setState({ fileList: [] });
+                        this.setState({
+                          loading: false,
+                          fileList: [],
+                        });
                         this.props.getData(false);
                         notification.success({
                           message: "Cập nhật phòng thành công!",
@@ -167,7 +170,6 @@ class Manager extends React.Component {
           createdAt: doc.createdAt,
         };
       });
-
     const handleSubmit = (values) => {
       this.setState({
         loading: true,
@@ -181,23 +183,23 @@ class Manager extends React.Component {
           acreage: values.acreage,
           toilet: values.toilet,
           item: values.item,
-          status: values.userId === "empty" ? "empty" : "hired",
+          // status: values.userId === "empty" ? "empty" : "hired",
           detail: values.detail,
-          userId:
-            values.userId === "empty" ? "empty" : JSON.parse(values.userId),
+          // userId:
+          //   values.userId === "empty" ? "empty" : JSON.parse(values.userId),
           price: values.price,
           motoElec: values.motoElec,
           water: values.water,
           internet: values.internet,
-          people: values.userId === "empty" ? 0 : roomDetail.people,
+          // people: values.userId === "empty" ? 0 : roomDetail.people,
         })
         .then((res) => {
           if (this.state.fileList.length < 1) {
-            this.props.getData(false);
             this.setState({
-              fileList: [],
               loading: false,
+              fileList: [],
             });
+            this.props.getData(false);
             notification.success({
               message: "Cập nhật phòng thành công!",
             });
@@ -206,7 +208,7 @@ class Manager extends React.Component {
     };
     return (
       <Fragment>
-        {isLoaded(this.props.Detail) && roomDetail ? (
+        {isLoaded(this.props.Detail) && roomDetail.id === this.props.itemId ? (
           <div className="p-5">
             <Form
               onFinish={handleSubmit}
@@ -330,27 +332,26 @@ class Manager extends React.Component {
                     <TextArea rows={5} placeholder="Introduction" />
                   </FormItem>
                 </Col>
-
-                <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
-                  <FormItem
-                    {...formItemLayout}
-                    name="userId"
-                    rules={[{ required: true, message: "Chọn người dùng" }]}
-                    label="User"
-                  >
-                    <Select placeholder="User" style={{ width: "100%" }}>
-                      {this.props.loadUser === false &&
-                        this.props.userList.map((item, index) => {
-                          return (
-                            <Option key={index} value={JSON.stringify(item)}>
-                              {item.name}
-                            </Option>
-                          );
-                        })}
-                      <Option value="empty">Trống</Option>
-                    </Select>
-                  </FormItem>
-                </Col>
+                {/* <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <FormItem
+                      {...formItemLayout}
+                      name="userId"
+                      rules={[{ required: true, message: "Chọn người dùng" }]}
+                      label="User"
+                    >
+                      <Select placeholder="User" style={{ width: "100%" }}>
+                        {this.props.loadUser === false &&
+                          this.props.userList.map((item, index) => {
+                            return (
+                              <Option key={index} value={JSON.stringify(item)}>
+                                {item.name}
+                              </Option>
+                            );
+                          })}
+                        <Option value="empty">Trống</Option>
+                      </Select>
+                    </FormItem>
+                  </Col> */}
                 <Col className="p-h-1" xl={24} lg={24} md={24} sm={24} xs={24}>
                   <FormItem
                     // name="image"
@@ -407,15 +408,17 @@ class Manager extends React.Component {
                   </FormItem>
                 </Col>
               </Row>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="bor-rad-10 float-r"
-                loading={this.state.loading}
-                onClick={this.handleUploadImage}
-              >
-                Sửa
-              </Button>
+              <div className="d-flex justify-flex-end">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="bor-rad-10"
+                  loading={this.state.loading}
+                  onClick={this.handleUploadImage}
+                >
+                  Sửa
+                </Button>
+              </div>
             </Form>
           </div>
         ) : (
