@@ -11,8 +11,6 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import firebase from "../../firebase/index";
-import { getUser } from "../../appRedux/actions";
-import { connect } from "react-redux";
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -25,7 +23,6 @@ const formItemLayout = {
 class Manager extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getUser();
     this.state = {
       fileList: [],
       uploadImage: 0,
@@ -46,17 +43,17 @@ class Manager extends React.Component {
         toilet: values.toilet,
         item: values.item,
         image: [],
-        status: values.user === "empty" ? "empty" : "hired",
+        status: "empty",
         detail: values.detail,
         createdAt: new Date().toISOString(),
-        userId: values.user === "empty" ? "empty" : JSON.parse(values.user),
+        userId: "empty",
         price: parseInt(values.price),
-        motoElec: parseInt(values.motoElec),
+        motoElec: 0,
         water: parseInt(values.water),
         internet: parseInt(values.internet),
         deposit: 0,
         people: 0,
-        electric: 0,
+        electrict: 0,
       })
       .then((res) => {
         this.state.fileList.forEach((fileItem) => {
@@ -164,16 +161,6 @@ class Manager extends React.Component {
             <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
               <FormItem
                 {...formItemLayout}
-                name="motoElec"
-                rules={[{ required: true, message: "Nhập giá xe điện" }]}
-                label="Xe điện"
-              >
-                <Input placeholder="Moto Electrict" />
-              </FormItem>
-            </Col>
-            <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
-              <FormItem
-                {...formItemLayout}
                 name="water"
                 rules={[{ required: true, message: "Nhập tiền nước" }]}
                 label="Nước"
@@ -207,26 +194,6 @@ class Manager extends React.Component {
             <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
               <FormItem
                 {...formItemLayout}
-                name="user"
-                rules={[{ required: true, message: "Chọn người dùng" }]}
-                label="User"
-              >
-                <Select placeholder="User" style={{ width: "100%" }}>
-                  {this.props.loadUser === false &&
-                    this.props.userList.map((item, index) => {
-                      return (
-                        <Option key={index} value={JSON.stringify(item)}>
-                          {item.name}
-                        </Option>
-                      );
-                    })}
-                  <Option value="empty">Trống</Option>
-                </Select>
-              </FormItem>
-            </Col>
-            <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
-              <FormItem
-                {...formItemLayout}
                 name="detail"
                 rules={[{ required: true, message: "Nhập mô tả" }]}
                 label="Mô tả"
@@ -243,7 +210,7 @@ class Manager extends React.Component {
               >
                 <Select
                   mode="multiple"
-                  placeholder="User"
+                  placeholder="Item"
                   style={{ width: "100%" }}
                 >
                   <Option value="cushion">Đệm</Option>
@@ -251,10 +218,11 @@ class Manager extends React.Component {
                   <Option value="table">Bàn</Option>
                   <Option value="shelve">Kệ</Option>
                   <Option value="airCondition">Điều hòa</Option>
-                  <Option value="electricWaterHeater">Bình nóng lạnh</Option>
+                  <Option value="electrictWaterHeater">Bình nóng lạnh</Option>
                 </Select>
               </FormItem>
             </Col>
+
             <Col className="p-h-1" xl={24} lg={24} md={24} sm={24} xs={24}>
               <FormItem
                 name="image"
@@ -288,11 +256,4 @@ class Manager extends React.Component {
   }
 }
 
-const mapStateToProps = ({ room }) => {
-  return {
-    userList: room.userList,
-    loadUser: room.loadUser,
-  };
-};
-
-export default connect(mapStateToProps, { getUser })(Manager);
+export default Manager;

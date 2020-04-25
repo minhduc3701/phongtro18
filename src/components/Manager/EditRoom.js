@@ -183,15 +183,10 @@ class Manager extends React.Component {
           acreage: values.acreage,
           toilet: values.toilet,
           item: values.item,
-          // status: values.userId === "empty" ? "empty" : "hired",
           detail: values.detail,
-          // userId:
-          //   values.userId === "empty" ? "empty" : JSON.parse(values.userId),
           price: values.price,
-          motoElec: values.motoElec,
           water: values.water,
           internet: values.internet,
-          // people: values.userId === "empty" ? 0 : roomDetail.people,
         })
         .then((res) => {
           if (this.state.fileList.length < 1) {
@@ -220,7 +215,6 @@ class Manager extends React.Component {
                 item: roomDetail.item,
                 detail: roomDetail.detail,
                 price: roomDetail.price,
-                motoElec: roomDetail.motoElec,
                 water: roomDetail.water,
                 internet: roomDetail.internet,
               }}
@@ -259,16 +253,6 @@ class Manager extends React.Component {
                 <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
                   <FormItem
                     {...formItemLayout}
-                    name="motoElec"
-                    rules={[{ required: true, message: "Nhập giá xe điện" }]}
-                    label="Xe điện"
-                  >
-                    <Input placeholder="Moto Electrict" />
-                  </FormItem>
-                </Col>
-                <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
-                  <FormItem
-                    {...formItemLayout}
                     name="water"
                     rules={[{ required: true, message: "Nhập tiền nước" }]}
                     label="Giá nước"
@@ -302,6 +286,16 @@ class Manager extends React.Component {
                 <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
                   <FormItem
                     {...formItemLayout}
+                    name="detail"
+                    rules={[{ required: true, message: "Nhập mô tả" }]}
+                    label="Mô tả"
+                  >
+                    <TextArea rows={5} placeholder="Introduction" />
+                  </FormItem>
+                </Col>
+                <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
+                  <FormItem
+                    {...formItemLayout}
                     name="item"
                     rules={[{ required: true, message: "Chọn người dùng" }]}
                     label="Vật dụng"
@@ -316,42 +310,12 @@ class Manager extends React.Component {
                       <Option value="table">Bàn</Option>
                       <Option value="shelve">Kệ</Option>
                       <Option value="airCondition">Điều hòa</Option>
-                      <Option value="electricWaterHeater">
+                      <Option value="electrictWaterHeater">
                         Bình nóng lạnh
                       </Option>
                     </Select>
                   </FormItem>
                 </Col>
-                <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
-                  <FormItem
-                    {...formItemLayout}
-                    name="detail"
-                    rules={[{ required: true, message: "Nhập mô tả" }]}
-                    label="Mô tả"
-                  >
-                    <TextArea rows={5} placeholder="Introduction" />
-                  </FormItem>
-                </Col>
-                {/* <Col className="p-h-1" xl={12} lg={12} md={24} sm={24} xs={24}>
-                    <FormItem
-                      {...formItemLayout}
-                      name="userId"
-                      rules={[{ required: true, message: "Chọn người dùng" }]}
-                      label="User"
-                    >
-                      <Select placeholder="User" style={{ width: "100%" }}>
-                        {this.props.loadUser === false &&
-                          this.props.userList.map((item, index) => {
-                            return (
-                              <Option key={index} value={JSON.stringify(item)}>
-                                {item.name}
-                              </Option>
-                            );
-                          })}
-                        <Option value="empty">Trống</Option>
-                      </Select>
-                    </FormItem>
-                  </Col> */}
                 <Col className="p-h-1" xl={24} lg={24} md={24} sm={24} xs={24}>
                   <FormItem
                     // name="image"

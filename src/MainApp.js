@@ -70,7 +70,7 @@ class MainApp extends React.Component {
           avatar: this.props.userApp[0].avatar,
           birth: this.props.userApp[0].birth,
           district: this.props.userApp[0].district,
-          electric: this.props.userApp[0].electric,
+          electrict: this.props.userApp[0].electrict,
           gender: this.props.userApp[0].gender,
           image: this.props.userApp[0].image,
           phone: this.props.userApp[0].phone,

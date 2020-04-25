@@ -1,27 +1,24 @@
 import React, { Fragment } from "react";
-import {
-  Row,
-  Col,
-  Modal,
-  Button,
-  Table,
-  Badge,
-  Input,
-  Popover,
-  Checkbox,
-} from "antd";
+import { Table, Input, Button, notification } from "antd";
 import { Link } from "react-router-dom";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ProfileOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { getRoomList } from "../../appRedux/actions";
+import { connect } from "react-redux";
+import CircularProgress from "../Loading/index";
+import firebase from "../../firebase/index";
 
 class Manager extends React.Component {
-  state = {
-    previewImage: null,
-    previewVisible: false,
-  };
+  constructor(props) {
+    super(props);
+    this.props.getRoomList();
+    this.state = {
+      previewImage: null,
+      previewVisible: false,
+      loading: false,
+      room: [],
+      countRoom: 0,
+    };
+  }
 
   onPreview = (photo) => {
     this.setState({
@@ -30,6 +27,91 @@ class Manager extends React.Component {
     });
   };
   handleCancel = () => this.setState({ previewVisible: false });
+
+  onChangeInput = (e, id) => {
+    let roomList = this.props.roomList;
+    if (this.state.room.length < 1) {
+      this.setState({
+        room: this.props.roomList,
+      });
+    }
+    for (let i = 0; i < roomList.length; i++) {
+      if (roomList[i].id === id) {
+        roomList[i]["newElectrict"] = parseInt(e.target.value);
+      }
+    }
+    this.setState({
+      room: roomList,
+    });
+  };
+
+  onFinishBill = () => {
+    let fill = true;
+    this.setState({
+      loading: true,
+    });
+    let roomList = this.state.room;
+    for (let i = 0; i < roomList.length; i++) {
+      if (roomList[i].newElectrict === undefined) {
+        fill = false;
+      }
+    }
+    {
+      this.state.room.length > 0 && fill
+        ? this.state.room.forEach((room) => {
+            firebase
+              .firestore()
+              .collection("bills")
+              .add({
+                userId: room.userId.id,
+                userName: room.userId.name,
+                roomId: room.id,
+                nameRoom: room.name,
+                bill: {
+                  water: room.water * room.people,
+                  lastElectrict: room.electrict,
+                  newElectrict: parseInt(room.newElectrict),
+                  internet: room.internet,
+                  motoElec: room.motoElec,
+                  type: "hire",
+                  total:
+                    room.price +
+                    room.water * room.people +
+                    room.internet +
+                    room.motoElec * 100000 +
+                    (parseInt(room.newElectrict) - room.electrict) * 4,
+                },
+                createdAt: new Date().toISOString(),
+              });
+            firebase
+              .collection("rooms")
+              .doc(room.id)
+              .update({
+                electrict: parseInt(room.newElectrict),
+              })
+              .then((res) => {
+                this.setState({
+                  countRoom: this.state.countRoom + 1,
+                });
+                if (this.state.countRoom === this.state.room.length) {
+                  this.props.getData(false);
+                  this.setState({
+                    loading: false,
+                  });
+                  notification.success({ message: "Thanh toán thành công!" });
+                }
+              });
+          })
+        : setTimeout(() => {
+            this.setState({ loading: false });
+            notification.error({
+              message: "Thất bại!",
+              description:
+                "Nhập đẩy đủ số điện mới cho các phòng trước khi hoàn thiện!",
+            });
+          }, 1000);
+    }
+  };
 
   render() {
     const actionMenu = (
@@ -74,59 +156,48 @@ class Manager extends React.Component {
         dataIndex: "name",
         key: "name",
         // width: "40%",
-        render: (key, data) => (
-          <Fragment>
-            <span className="text-ellipsis-2">{data.nameRoom}</span>
-            <div
-              className="gx-manage-margin"
-              style={{
-                marginTop: 5,
-                fontStyle: "italic",
-                color: "gray",
-                fontSize: "0.8em",
-              }}
-            ></div>
-          </Fragment>
+        render: (key, roomList) => (
+          <span className="text-ellipsis-2">{roomList.name}</span>
         ),
       },
       {
         title: "Tiền phòng",
         dataIndex: "price",
         key: "price",
-        render: (key, data) => {
-          return <span>{data.price}</span>;
+        render: (key, roomList) => {
+          return <span>{roomList.price}</span>;
         },
       },
       {
         title: "Tiền nước",
         dataIndex: "price",
         key: "price",
-        render: (key, data) => {
-          return <span>{data.water}</span>;
+        render: (key, roomList) => {
+          return <span>{roomList.water}</span>;
         },
       },
       {
         title: "Tiền mạng",
         dataIndex: "internet",
         key: "internet",
-        render: (key, data) => {
-          return <span>{data.internet}</span>;
+        render: (key, roomList) => {
+          return <span>{roomList.internet}</span>;
         },
       },
       {
         title: "Số điện tháng trước",
         dataIndex: "lastElectric",
         key: "lastElectric",
-        render: (key, data) => {
-          return <span>{data.lastElectric}</span>;
+        render: (key, roomList) => {
+          return <span>{roomList.electrict}</span>;
         },
       },
       {
         title: "Xe điện",
         dataIndex: "motoElec",
         key: "motoElec",
-        render: (key, data) => {
-          return <Checkbox />;
+        render: (key, roomList) => {
+          return <span>{roomList.motoElec}</span>;
         },
       },
 
@@ -134,13 +205,15 @@ class Manager extends React.Component {
         title: "Số điện mới",
         dataIndex: "newElectic",
         key: "newElectic",
-        render: (key, data) => {
+        render: (key, roomList) => {
           return (
             <span>
               <Input
                 style={{ border: 0 }}
                 className="border-none"
                 placeholder="Số điện mới"
+                type="number"
+                onChange={(e) => this.onChangeInput(e, roomList.id)}
               />
             </span>
           );
@@ -149,14 +222,38 @@ class Manager extends React.Component {
     ];
 
     return (
-      <Table
-        bordered={true}
-        columns={columns}
-        dataSource={data}
-        rowKey={(data) => data.id}
-      />
+      <Fragment>
+        {!this.props.loadRoomList ? (
+          <Fragment>
+            <Table
+              bordered={true}
+              columns={columns}
+              dataSource={this.props.roomList}
+              // rowKey={(this.props.roomList) => this.props.roomList.id}
+            />
+            <div className="d-flex justify-flex-end">
+              <Button
+                loading={this.state.loading}
+                type="primary"
+                onClick={this.onFinishBill}
+              >
+                Hoàn thành
+              </Button>
+            </div>
+          </Fragment>
+        ) : (
+          <CircularProgress />
+        )}
+      </Fragment>
     );
   }
 }
 
-export default Manager;
+const mapStateToProps = ({ room }) => {
+  return {
+    roomList: room.roomList,
+    loadRoomList: room.loadRoomList,
+  };
+};
+
+export default connect(mapStateToProps, { getRoomList })(Manager);

@@ -26,12 +26,6 @@ const routes = [
     main: asyncComponent(() => import("./components/RoomDetail")),
   },
   {
-    path: "/room-edit/:id",
-    exact: true,
-    // main: (match) => <EditRoom match={match} />,
-    main: asyncComponent((match) => import("./components/Manager/EditRoom")),
-  },
-  {
     path: "/image-list",
     exact: true,
     main: asyncComponent(() => import("./components/ImageList")),

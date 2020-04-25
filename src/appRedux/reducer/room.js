@@ -8,6 +8,9 @@ import {
   GET_USER_DETAIL_START,
   GET_USER_DETAIL_SUCCESS,
   GET_USER_DETAIL_ERROR,
+  GET_ROOM_LIST_START,
+  GET_ROOM_LIST_SUCCESS,
+  GET_ROOM_LIST_ERROR,
 } from "../../constants/ActionType";
 
 let initialState = {
@@ -17,6 +20,8 @@ let initialState = {
   loadRoomDetail: true,
   userDetail: null,
   loadUserDetail: true,
+  roomList: null,
+  loadRoomList: true,
 };
 
 const cart = (state = initialState, action) => {
@@ -31,6 +36,17 @@ const cart = (state = initialState, action) => {
 
     case GET_USER_LIST_START: {
       return { ...state, loadUser: true };
+    }
+    case GET_ROOM_LIST_SUCCESS: {
+      return {
+        ...state,
+        roomList: action.payload,
+        loadRoomList: false,
+      };
+    }
+
+    case GET_ROOM_LIST_START: {
+      return { ...state, loadRoomList: true };
     }
     case GET_USER_DETAIL_SUCCESS: {
       return {

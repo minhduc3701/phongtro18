@@ -1,5 +1,15 @@
 import React, { Fragment } from "react";
-import { Row, Col, Modal, Button, Table, Badge, Popover } from "antd";
+import {
+  Row,
+  Col,
+  Modal,
+  Button,
+  Table,
+  Badge,
+  Popover,
+  Popconfirm,
+  notification,
+} from "antd";
 import { Link } from "react-router-dom";
 import {
   DeleteOutlined,
@@ -16,6 +26,7 @@ import { connect } from "react-redux";
 import CircularProgress from "../Loading/index";
 import { firestoreConnect, isLoaded } from "react-redux-firebase";
 import { compose } from "redux";
+import firebase from "../../firebase/index";
 
 class Manager extends React.Component {
   state = {
@@ -88,6 +99,18 @@ class Manager extends React.Component {
       itemId: null,
     });
   };
+  onDeleteRoom = (id) => {
+    firebase
+      .firestore()
+      .collection("rooms")
+      .doc(id)
+      .delete()
+      .then((res) => {
+        notification.success({
+          message: "Xóa phòng thành công!",
+        });
+      });
+  };
 
   render() {
     let requests = [];
@@ -99,7 +122,7 @@ class Manager extends React.Component {
           userId: doc.userId,
           status: doc.status,
           people: doc.people,
-          electric: doc.electric,
+          electrict: doc.electrict,
           createdAt: doc.createdAt,
         });
       });
@@ -109,6 +132,7 @@ class Manager extends React.Component {
         title: "Mã",
         dataIndex: "code",
         key: "code",
+        width: "10%",
         render: (key, requests) => {
           return (
             <div>
@@ -160,10 +184,10 @@ class Manager extends React.Component {
       },
       {
         title: "Số điện",
-        dataIndex: "electric",
-        key: "electric",
+        dataIndex: "electrict",
+        key: "electrict",
         render: (key, requests) => {
-          return <span>{requests.electric}</span>;
+          return <span>{requests.electrict}</span>;
         },
       },
       {
@@ -179,7 +203,6 @@ class Manager extends React.Component {
               >
                 <EditOutlined className="p-r-1" /> Chỉnh sửa người dùng
               </li>
-              {/* <Link to={`/room-edit/${requests.id}`}> */}
               <li
                 onClick={() => this.onOpenEdit()}
                 className="p-v-1-i cursor-pointer"
@@ -187,13 +210,17 @@ class Manager extends React.Component {
               >
                 <HomeOutlined className="p-r-1" /> Chỉnh sửa phòng
               </li>
-              {/* </Link> */}
-              <li className="p-v-1-i cursor-pointer">
-                <Link style={{ color: "red" }}>
-                  <DeleteOutlined className="p-r-1" />
-                  Xóa
-                </Link>
-              </li>
+              <Popconfirm
+                title="Bạn có chắc chắn muốn xóa phòng?"
+                onConfirm={() => this.onDeleteRoom(requests.id)}
+              >
+                <li className="p-v-1-i cursor-pointer">
+                  <Link style={{ color: "red" }}>
+                    <DeleteOutlined className="p-r-1" />
+                    Xóa
+                  </Link>
+                </li>
+              </Popconfirm>
             </ul>
           );
           return (
@@ -264,7 +291,7 @@ class Manager extends React.Component {
               footer={null}
               onCancel={this.handleCancel}
             >
-              <Bill />
+              <Bill getData={this.onGetData} />
             </Modal>
             <Modal
               width="60em"
@@ -285,23 +312,27 @@ class Manager extends React.Component {
             >
               <CreateUser />
             </Modal>
-            <Modal
-              title="Chỉnh sửa người dùng"
-              visible={this.state.visibleEditUser}
-              footer={null}
-              onCancel={this.handleCancel}
-            >
-              <EditUser itemId={this.state.itemId} getData={this.onGetData} />
-            </Modal>
-            <Modal
-              width="60em"
-              title="Sửa phòng"
-              visible={this.state.visibleEdit}
-              footer={null}
-              onCancel={this.handleCancel}
-            >
-              <EditRoom itemId={this.state.itemId} getData={this.onGetData} />
-            </Modal>
+            {this.state.visibleEditUser ? (
+              <Modal
+                title="Chỉnh sửa người dùng"
+                visible={this.state.visibleEditUser}
+                footer={null}
+                onCancel={this.handleCancel}
+              >
+                <EditUser itemId={this.state.itemId} getData={this.onGetData} />
+              </Modal>
+            ) : null}
+            {this.state.visibleEdit ? (
+              <Modal
+                width="60em"
+                title="Sửa phòng"
+                visible={this.state.visibleEdit}
+                footer={null}
+                onCancel={this.handleCancel}
+              >
+                <EditRoom itemId={this.state.itemId} getData={this.onGetData} />
+              </Modal>
+            ) : null}
           </div>
         )}
       </Fragment>

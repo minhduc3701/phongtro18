@@ -35,7 +35,7 @@ class SingUp extends React.Component {
           rId: "",
           rName: "",
           createdAt: new Date().toISOString(),
-          electric: 0,
+          electrict: 0,
           image: "",
         };
         firebase.firestore().doc(`/users/${data.user.uid}`).set(defaultUser);

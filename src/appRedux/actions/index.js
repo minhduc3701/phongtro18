@@ -3,6 +3,9 @@ import {
   GET_USER_LIST_START,
   GET_USER_LIST_SUCCESS,
   GET_USER_LIST_ERROR,
+  GET_ROOM_LIST_START,
+  GET_ROOM_LIST_SUCCESS,
+  GET_ROOM_LIST_ERROR,
   GET_USER_DETAIL_START,
   GET_USER_DETAIL_SUCCESS,
   GET_USER_DETAIL_ERROR,
@@ -35,6 +38,39 @@ export const getUser = () => {
       .catch((err) => {
         console.log(err);
         dispatch({ type: GET_USER_LIST_ERROR, payload: err });
+      });
+  };
+};
+export const getRoomList = () => {
+  return (dispatch) => {
+    dispatch({ type: GET_ROOM_LIST_START });
+    firebase
+      .firestore()
+      .collection("rooms")
+      .get()
+      .then((res) => {
+        let roomList = [];
+        res.forEach((doc) => {
+          roomList.push({
+            id: doc.id,
+            name: doc.data().name,
+            water: doc.data().water,
+            electrict: doc.data().electrict,
+            price: doc.data().price,
+            people: doc.data().people,
+            userId: doc.data().userId,
+            internet: doc.data().internet,
+            motoElec: doc.data().motoElec,
+          });
+        });
+        dispatch({
+          type: GET_ROOM_LIST_SUCCESS,
+          payload: roomList,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: GET_ROOM_LIST_ERROR, payload: err });
       });
   };
 };
@@ -96,7 +132,7 @@ export const getRoomDetail = (id) => {
           water: res.data().water,
           internet: res.data().internet,
           deposit: res.data().deposit,
-          electric: res.data().electric,
+          electrict: res.data().electrict,
           people: res.data().people,
         };
         dispatch({
