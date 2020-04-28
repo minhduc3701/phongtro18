@@ -176,22 +176,6 @@ class Manager extends React.Component {
     const onPay = (value) => {
       let payElec =
         (parseInt(value.newElectrict) - this.props.roomDetail.electrict) * 4000;
-      // let payWater = this.props.roomDetail.water * this.props.roomDetail.people;
-      // let payMoto = this.props.roomDetail.motoElec * 100000;
-      // let bill = {
-      //   water: this.props.roomDetail.water * this.props.roomDetail.people,
-      //   lastElectrict: this.props.roomDetail.electrict,
-      //   newElectrict: parseInt(value.newElectrict),
-      //   internet: this.props.roomDetail.internet,
-      //   motoElec: this.props.roomDetail.motoElec,
-      //   type: "end",
-      //   total:
-      //     this.props.roomDetail.deposit -
-      //     (payWater + payElec + this.props.roomDetail.internet + payMoto),
-      // };
-      // console.log(payElec);
-      // console.log(this.props.roomDetail.internet);
-      // console.log(bill);
       this.setState({
         loading: true,
       });

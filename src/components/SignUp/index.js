@@ -30,24 +30,29 @@ class SingUp extends React.Component {
           address: "",
           phone: "",
           gender: "",
-          permission: "",
+          permission: "guest",
           avatar: "",
           rId: "",
           rName: "",
           createdAt: new Date().toISOString(),
-          electrict: 0,
           image: "",
         };
-        firebase.firestore().doc(`/users/${data.user.uid}`).set(defaultUser);
+        firebase
+          .firestore()
+          .doc(`/users/${data.user.uid}`)
+          .set(defaultUser)
+          .then((res) => {
+            notification.success("Tạo tài khoản thành công!");
+          });
         firebase.auth().useDeviceLanguage();
         firebase.auth().currentUser.sendEmailVerification();
       })
       .catch((error) => {
         let err = "";
         if (error.code === "auth/email-already-in-use")
-          err = "The email address is already in use by another account";
+          err = "Địa chỉ email này đã được tồn tại!";
         else err = "Invalid account information";
-        notification.open({
+        notification.error({
           message: err,
         });
       });

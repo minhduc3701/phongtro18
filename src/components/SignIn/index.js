@@ -35,6 +35,8 @@ class SignIn extends React.Component {
           notification.open({
             message: "Tài khoản chưa được kích hoạt! Hãy kiểm tra email",
           });
+          firebase.auth().useDeviceLanguage();
+          firebase.auth().currentUser.sendEmailVerification();
         }
       })
       .catch((err) => {

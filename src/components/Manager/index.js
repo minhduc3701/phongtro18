@@ -268,14 +268,14 @@ class Manager extends React.Component {
                   {" "}
                   Tạo phòng{" "}
                 </Button>
-                <Button
+                {/* <Button
                   onClick={this.onOpenUser}
                   className="m-h-3 bor-rad-10"
                   style={{ width: "12em" }}
                 >
                   {" "}
                   Tạo user{" "}
-                </Button>
+                </Button> */}
               </Col>
             </Row>
             <Table
@@ -284,34 +284,40 @@ class Manager extends React.Component {
               columns={columns}
               rowKey={(requests) => requests.id}
             />
-            <Modal
-              width="60em"
-              title="Tính bill"
-              visible={this.state.visibleBill}
-              footer={null}
-              onCancel={this.handleCancel}
-            >
-              <Bill getData={this.onGetData} />
-            </Modal>
-            <Modal
-              width="60em"
-              title="Tạo phòng"
-              visible={this.state.visibleCreate}
-              footer={null}
-              onCancel={this.handleCancel}
-            >
-              <CreateRoom getData={this.onGetData} />
-            </Modal>
+            {this.state.visibleBill ? (
+              <Modal
+                width="60em"
+                title="Tính bill"
+                visible={this.state.visibleBill}
+                footer={null}
+                onCancel={this.handleCancel}
+              >
+                <Bill getData={this.onGetData} />
+              </Modal>
+            ) : null}
+            {this.state.visibleCreate ? (
+              <Modal
+                width="60em"
+                title="Tạo phòng"
+                visible={this.state.visibleCreate}
+                footer={null}
+                onCancel={this.handleCancel}
+              >
+                <CreateRoom getData={this.onGetData} />
+              </Modal>
+            ) : null}
 
-            <Modal
-              width="60em"
-              title="Tạo người dùng"
-              visible={this.state.visibleUser}
-              footer={null}
-              onCancel={this.handleCancel}
-            >
-              <CreateUser />
-            </Modal>
+            {/* {this.state.visibleUser ? (
+              <Modal
+                width="60em"
+                title="Tạo người dùng"
+                visible={this.state.visibleUser}
+                footer={null}
+                onCancel={this.handleCancel}
+              >
+                <CreateUser getData={this.onGetData} />
+              </Modal>
+            ) : null} */}
             {this.state.visibleEditUser ? (
               <Modal
                 title="Chỉnh sửa người dùng"

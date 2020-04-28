@@ -10,6 +10,7 @@ import "antd/dist/antd.css";
 import firebase from "./firebase/index";
 import { createFirestoreInstance } from "redux-firestore";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { IntlProvider } from "react-intl";
 import thunk from "redux-thunk";
 
 const middlewares = [thunk];
@@ -34,11 +35,13 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <Router>
-        <Switch>
-          <Route path="/" component={App} />
-        </Switch>
-      </Router>
+      <IntlProvider locale="en">
+        <Router>
+          <Switch>
+            <Route path="/" component={App} />
+          </Switch>
+        </Router>
+      </IntlProvider>
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")

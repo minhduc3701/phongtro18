@@ -2,12 +2,21 @@ import React, { Fragment } from "react";
 import { Row, Col, Modal } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import webLogo from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
+import { getRoomDetail } from "../../appRedux/actions";
+import { connect } from "react-redux";
+import Loading from "../Loading";
+import { NumberFormat } from "../../util/NumberFormat";
+import { FormattedNumber } from "react-intl";
 
 class Menu extends React.Component {
-  state = {
-    previewImage: null,
-    previewVisible: false,
-  };
+  constructor(props) {
+    super(props);
+    this.props.getRoomDetail(props.match.params.id);
+    this.state = {
+      previewImage: null,
+      previewVisible: false,
+    };
+  }
 
   onPreview = (photo) => {
     this.setState({
@@ -17,99 +26,127 @@ class Menu extends React.Component {
   };
   handleCancel = () => this.setState({ previewVisible: false });
 
+  textItem = (value) => {
+    switch (value) {
+      case "cushion":
+        return "Đệm";
+
+      case "wardrobe":
+        return "Tủ quần áo";
+
+      case "table":
+        return "Bàn";
+
+      case "shelve":
+        return "Kệ";
+
+      case "airCondition":
+        return "Điều hòa";
+
+      default:
+        return "Bình nóng lạnh";
+    }
+  };
+
   render() {
+    let { roomDetail } = this.props;
     return (
       <Fragment>
-        <div className="p-b-5">
-          <img
-            style={{ maxHeight: "40em" }}
-            className="w-100 p-b-5 h-100 object-fit-cover"
-            src={webLogo}
-            alt="phong-tro-18"
-          />
-          <div className="d-flex justify-between align-center">
-            <div>
-              <h2 className="font-weight-bold">Tên phòng</h2>
-              <h4>Diện tích:</h4>
-              <h4>
-                Địa chỉ: Số 18 ngách 7 ngõ 260 Phố chợ Khâm thiên, Đống Đa, Hà
-                Nội
-              </h4>
+        {!this.props.loadRoomDetail ? (
+          <div className="p-b-5">
+            <img
+              style={{ maxHeight: "40em" }}
+              className="w-100 p-b-5 h-100 object-fit-cover"
+              src={roomDetail.image[0].url}
+              alt={roomDetail.name}
+            />
+            <div className="d-flex justify-between align-center">
+              <div>
+                <h2 className="font-weight-bold">{roomDetail.name}</h2>
+                <h4>Diện tích: {roomDetail.acreage}</h4>
+                <h4>
+                  Địa chỉ: Số 18 ngách 7 ngõ 260 Phố chợ Khâm thiên, Đống Đa, Hà
+                  Nội
+                </h4>
+              </div>
+              <h1
+                className={
+                  roomDetail.status === "empty"
+                    ? "color-success"
+                    : "color-danger"
+                }
+              >
+                {roomDetail.status === "empty" ? "Phòng trống" : "Hết phòng"}
+              </h1>
             </div>
-            <h1 className="color-danger">Hết phòng</h1>
+            <hr />
+            <h2 className="font-weight-bold">Mô tả</h2>
+            <h4>{roomDetail.detail}</h4>
+            <h2 className="font-weight-bold m-t-3">Vật dụng</h2>
+            <Row>
+              {roomDetail.item.map((item, index) => {
+                return (
+                  <Col key={index} xl={12} lg={12} md={12} sm={24} lg={24}>
+                    <h4>
+                      <CheckCircleOutlined /> {this.textItem(item)}
+                    </h4>
+                  </Col>
+                );
+              })}
+            </Row>
+            <h2 className="font-weight-bold m-t-3">Giá</h2>
+            <ul>
+              <li>
+                <h4>
+                  Giá phòng: {NumberFormat(roomDetail.price)}
+                  /tháng
+                </h4>
+              </li>
+              <li>
+                <h4>Giá nước: {roomDetail.water}/người</h4>
+              </li>
+              <li>
+                <h4>Giá điện: 4.000/số</h4>
+              </li>
+              <li>
+                <h4>Giá internet: {roomDetail.internet}/phòng</h4>
+              </li>
+              <li>
+                <h4>Giá xe điện: 100.000/xe</h4>
+              </li>
+            </ul>
+
+            <hr />
+            <Row>
+              {roomDetail.image.map((item, index) => {
+                return (
+                  <Col
+                    key={index}
+                    className="p-1"
+                    xl={6}
+                    lg={6}
+                    md={16}
+                    sm={24}
+                    lg={24}
+                  >
+                    <img
+                      onClick={() => this.onPreview(item.url)}
+                      className="w-100 object-fit-cover cursor-pointer"
+                      src={item.url}
+                      alt={item.name}
+                    />
+                  </Col>
+                );
+              })}
+            </Row>
           </div>
-          <hr />
-          <h2 className="font-weight-bold">Mô tả</h2>
-          <h4>Chi tiết</h4>
-          <h2 className="font-weight-bold">Vật dụng</h2>
-          <Row>
-            <Col xl={12} lg={12} md={12} sm={24} lg={24}>
-              <h4>
-                <CheckCircleOutlined /> Giường
-              </h4>
-            </Col>
-            <Col xl={12} lg={12} md={12} sm={24} lg={24}>
-              <h4>
-                <CheckCircleOutlined /> Giường
-              </h4>
-            </Col>
-            <Col xl={12} lg={12} md={12} sm={24} lg={24}>
-              <h4>
-                <CheckCircleOutlined /> Giường
-              </h4>
-            </Col>
-            <Col xl={12} lg={12} md={12} sm={24} lg={24}>
-              <h4>
-                <CheckCircleOutlined /> Giường
-              </h4>
-            </Col>
-            <Col xl={12} lg={12} md={12} sm={24} lg={24}>
-              <h4>
-                <CheckCircleOutlined /> Giường
-              </h4>
-            </Col>
-            <Col xl={12} lg={12} md={12} sm={24} lg={24}>
-              <h4>
-                <CheckCircleOutlined /> Giường
-              </h4>
-            </Col>
-          </Row>
-          <hr />
-          <Row>
-            <Col className="p-1" xl={6} lg={6} md={16} sm={24} lg={24}>
-              <img
-                className="w-100 object-fit-cover"
-                src={webLogo}
-                alt="room-image"
-              />
-            </Col>
-            <Col className="p-1" xl={6} lg={6} md={16} sm={24} lg={24}>
-              <img
-                className="w-100 object-fit-cover"
-                src={webLogo}
-                alt="room-image"
-              />
-            </Col>
-            <Col className="p-1" xl={6} lg={6} md={16} sm={24} lg={24}>
-              <img
-                className="w-100 object-fit-cover"
-                src={webLogo}
-                alt="room-image"
-              />
-            </Col>
-            <Col className="p-1" xl={6} lg={6} md={16} sm={24} lg={24}>
-              <img
-                className="w-100 object-fit-cover"
-                src={webLogo}
-                alt="room-image"
-              />
-            </Col>
-          </Row>
-        </div>
+        ) : (
+          <Loading />
+        )}
         <Modal
           visible={this.state.previewVisible}
           footer={null}
-          style={{ marginTop: -90 }}
+          onCancel={this.handleCancel}
         >
           <img
             src={this.state.previewImage}
@@ -122,4 +159,11 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+const mapStateToProps = ({ room }) => {
+  return {
+    roomDetail: room.roomDetail,
+    loadRoomDetail: room.loadRoomDetail,
+  };
+};
+
+export default connect(mapStateToProps, { getRoomDetail })(Menu);

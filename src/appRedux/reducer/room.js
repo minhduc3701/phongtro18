@@ -11,6 +11,9 @@ import {
   GET_ROOM_LIST_START,
   GET_ROOM_LIST_SUCCESS,
   GET_ROOM_LIST_ERROR,
+  GET_IMAGE_LIST_START,
+  GET_IMAGE_LIST_SUCCESS,
+  GET_IMAGE_LIST_ERROR,
 } from "../../constants/ActionType";
 
 let initialState = {
@@ -22,10 +25,23 @@ let initialState = {
   loadUserDetail: true,
   roomList: null,
   loadRoomList: true,
+  imageList: null,
+  loadImageList: true,
 };
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
+    case GET_IMAGE_LIST_SUCCESS: {
+      return {
+        ...state,
+        imageList: action.payload,
+        loadImageList: false,
+      };
+    }
+
+    case GET_IMAGE_LIST_START: {
+      return { ...state, loadImageList: true };
+    }
     case GET_USER_LIST_SUCCESS: {
       return {
         ...state,

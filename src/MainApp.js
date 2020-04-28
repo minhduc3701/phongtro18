@@ -41,7 +41,7 @@ class MainApp extends React.Component {
             "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
           document.cookie =
             "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
-          window.location.href = "http://localhost:3000/";
+          // window.location.href = "http://localhost:3000/";
         }
       } else {
         localStorage.clear();
@@ -56,7 +56,7 @@ class MainApp extends React.Component {
             "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000;path=/";
         }
         localStorage.clear();
-        window.location.href = "http://localhost:3000/";
+        // window.location.href = "http://localhost:3000/";
       }
     });
 

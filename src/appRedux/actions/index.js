@@ -6,6 +6,9 @@ import {
   GET_ROOM_LIST_START,
   GET_ROOM_LIST_SUCCESS,
   GET_ROOM_LIST_ERROR,
+  GET_IMAGE_LIST_START,
+  GET_IMAGE_LIST_SUCCESS,
+  GET_IMAGE_LIST_ERROR,
   GET_USER_DETAIL_START,
   GET_USER_DETAIL_SUCCESS,
   GET_USER_DETAIL_ERROR,
@@ -47,6 +50,7 @@ export const getRoomList = () => {
     firebase
       .firestore()
       .collection("rooms")
+      .where("status", "==", "hired")
       .get()
       .then((res) => {
         let roomList = [];
@@ -143,6 +147,63 @@ export const getRoomDetail = (id) => {
       .catch((err) => {
         console.log(err);
         dispatch({ type: GET_ROOM_DETAIL_LIST_ERROR, payload: err });
+      });
+  };
+};
+
+export const getImageList = () => {
+  return (dispatch) => {
+    dispatch({ type: GET_IMAGE_LIST_START });
+    firebase
+      .firestore()
+      .collection("rooms")
+      .get()
+      .then((res) => {
+        let imageList = [];
+        res.forEach((doc) => {
+          imageList.push({
+            id: doc.id,
+            image: doc.data().image,
+          });
+        });
+        dispatch({
+          type: GET_IMAGE_LIST_SUCCESS,
+          payload: imageList,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: GET_IMAGE_LIST_ERROR, payload: err });
+      });
+  };
+};
+export const getRoomAllList = () => {
+  return (dispatch) => {
+    dispatch({ type: GET_ROOM_LIST_START });
+    firebase
+      .firestore()
+      .collection("rooms")
+      .get()
+      .then((res) => {
+        let roomList = [];
+        res.forEach((doc) => {
+          roomList.push({
+            id: doc.id,
+            name: doc.data().name,
+            people: doc.data().people,
+            image: doc.data().image,
+            detail: doc.data().detail,
+            status: doc.data().status,
+          });
+        });
+        dispatch({
+          type: GET_ROOM_LIST_SUCCESS,
+          payload: roomList,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: GET_ROOM_LIST_ERROR, payload: err });
       });
   };
 };

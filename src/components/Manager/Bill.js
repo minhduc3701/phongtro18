@@ -73,17 +73,18 @@ class Manager extends React.Component {
                   newElectrict: parseInt(room.newElectrict),
                   internet: room.internet,
                   motoElec: room.motoElec,
-                  type: "hire",
+                  type: "month",
                   total:
                     room.price +
                     room.water * room.people +
                     room.internet +
                     room.motoElec * 100000 +
-                    (parseInt(room.newElectrict) - room.electrict) * 4,
+                    (parseInt(room.newElectrict) - room.electrict) * 4000,
                 },
-                createdAt: new Date().toISOString(),
+                createdAt: new Date().toLocaleDateString(),
               });
             firebase
+              .firestore()
               .collection("rooms")
               .doc(room.id)
               .update({
@@ -114,42 +115,6 @@ class Manager extends React.Component {
   };
 
   render() {
-    const actionMenu = (
-      <ul className="ul-style">
-        <li className="p-v-1-i cursor-pointer">
-          <Link className="text-grey-i">
-            <EditOutlined className="p-r-1" /> Chỉnh sửa người dùng
-          </Link>
-        </li>
-        <li className="p-v-1-i cursor-pointer">
-          <Link style={{ color: "red" }}>
-            <DeleteOutlined className="p-r-1" />
-            Xóa
-          </Link>
-        </li>
-      </ul>
-    );
-
-    const data = [
-      {
-        id: "231j3i12",
-        userId: "21312412ẻuoaưi",
-        userName: "Nguyễn Đức",
-        roomId: "918230192jăhea",
-        nameRoom: "T3N",
-        bill: {
-          water: 180,
-          lastElectrict: 3201,
-          newElectrict: 4919,
-          internet: 50,
-          motoElec: 0,
-        },
-        month: 4,
-        year: 2020,
-        createdAt: "123123",
-      },
-    ];
-
     const columns = [
       {
         title: "Tên phòng",
@@ -229,9 +194,9 @@ class Manager extends React.Component {
               bordered={true}
               columns={columns}
               dataSource={this.props.roomList}
-              // rowKey={(this.props.roomList) => this.props.roomList.id}
+              rowKey={(roomList) => roomList.id}
             />
-            <div className="d-flex justify-flex-end">
+            <div className="d-flex justify-flex-end p-v-3">
               <Button
                 loading={this.state.loading}
                 type="primary"
