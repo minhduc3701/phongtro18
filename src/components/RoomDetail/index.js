@@ -1,12 +1,10 @@
 import React, { Fragment } from "react";
 import { Row, Col, Modal } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import webLogo from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
 import { getRoomDetail } from "../../appRedux/actions";
 import { connect } from "react-redux";
 import Loading from "../Loading";
 import { NumberFormat } from "../../util/NumberFormat";
-import { FormattedNumber } from "react-intl";
 
 class Menu extends React.Component {
   constructor(props) {
@@ -103,16 +101,22 @@ class Menu extends React.Component {
                 </h4>
               </li>
               <li>
-                <h4>Giá nước: {roomDetail.water}/người</h4>
+                <h4>Giá nước: {NumberFormat(roomDetail.water)}/người</h4>
               </li>
               <li>
-                <h4>Giá điện: 4.000/số</h4>
+                <h4>
+                  Giá điện: 4.000{" "}
+                  <span style={{ textDecoration: "underline" }}>đ</span>/số
+                </h4>
               </li>
               <li>
-                <h4>Giá internet: {roomDetail.internet}/phòng</h4>
+                <h4>Giá internet: {NumberFormat(roomDetail.internet)}/phòng</h4>
               </li>
               <li>
-                <h4>Giá xe điện: 100.000/xe</h4>
+                <h4>
+                  Giá xe điện: 100.000{" "}
+                  <span style={{ textDecoration: "underline" }}>đ</span>/xe
+                </h4>
               </li>
             </ul>
 

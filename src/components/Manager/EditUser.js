@@ -14,6 +14,7 @@ import { getUserById, getRoomDetail, getUser } from "../../appRedux/actions";
 import { connect } from "react-redux";
 import CircularProgress from "../Loading/index";
 import firebase from "../../firebase/index";
+import { NumberFormat } from "../../util/NumberFormat";
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -79,6 +80,7 @@ class Manager extends React.Component {
               rId: "",
               rName: "",
               permission: "guest",
+              deposit: 0,
             });
       }
 
@@ -101,6 +103,7 @@ class Manager extends React.Component {
           rId: this.props.roomDetail.id,
           rName: this.props.roomDetail.name,
           permission: "renter",
+          deposit: parseInt(values.deposit),
         })
         .then((res) => {
           notification.success({
@@ -132,6 +135,7 @@ class Manager extends React.Component {
           rId: "",
           rName: "",
           permission: "guest",
+          deposit: 0,
         });
       firebase
         .firestore()
@@ -199,6 +203,7 @@ class Manager extends React.Component {
           rId: "",
           rName: "",
           permission: "guest",
+          deposit: 0,
         });
       firebase
         .firestore()
@@ -209,6 +214,7 @@ class Manager extends React.Component {
           roomId: this.props.roomDetail.id,
           nameRoom: this.props.roomDetail.name,
           bill: {
+            price: this.props.roomDetail.price,
             water: this.props.roomDetail.water * this.props.roomDetail.people,
             lastElectrict: this.props.roomDetail.electrict,
             newElectrict: parseInt(value.newElectrict),
@@ -276,7 +282,9 @@ class Manager extends React.Component {
                 Số điện thoại:{" "}
                 {this.props.userDetail ? this.props.userDetail.phone : ""}
               </li>
-              <li>Số tiền cọc: {this.props.roomDetail.deposit}</li>
+              <li>
+                Số tiền cọc: {NumberFormat(this.props.roomDetail.deposit)}
+              </li>
             </ul>
             {this.state.edit ? (
               <Fragment>

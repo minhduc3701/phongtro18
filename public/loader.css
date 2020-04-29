@@ -2228,4 +2228,8 @@ hr {
 .padding-picture-item {
   padding: 0.3em !important;
 }
+
+.underline {
+  text-decoration: underline !important;
+}
 /*# sourceMappingURL=loader.css.map */

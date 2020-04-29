@@ -20,7 +20,7 @@ import {
 import Bill from "./Bill";
 import CreateRoom from "./CreateRoom";
 import EditRoom from "./EditRoom";
-import CreateUser from "./CreateUser";
+// import CreateUser from "./CreateUser";
 import EditUser from "./EditUser";
 import { connect } from "react-redux";
 import CircularProgress from "../Loading/index";
@@ -104,10 +104,29 @@ class Manager extends React.Component {
       .firestore()
       .collection("rooms")
       .doc(id)
-      .delete()
+      .get()
       .then((res) => {
-        notification.success({
-          message: "Xóa phòng thành công!",
+        let status = res.data().status;
+        if (status === "empty") {
+          firebase
+            .firestore()
+            .collection("rooms")
+            .doc(id)
+            .delete()
+            .then((res) => {
+              notification.success({
+                message: "Xóa phòng thành công!",
+              });
+            });
+        } else {
+          notification.error({
+            message: "Phòng chưa được thanh toán không thể xóa!",
+          });
+        }
+      })
+      .catch((err) => {
+        notification.error({
+          message: "Phòng chưa được thanh toán không thể xóa!",
         });
       });
   };

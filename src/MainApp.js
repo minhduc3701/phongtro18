@@ -35,17 +35,17 @@ class MainApp extends React.Component {
         ) || [""];
         let uid = id[2] || "null";
         if (user.uid !== uid) {
-          firebase.auth().signOut();
+          // firebase.auth().signOut();
           localStorage.clear();
           document.cookie =
             "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
           document.cookie =
             "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
-          // window.location.href = "http://localhost:3000/";
+          window.location.href = "http://localhost:3000/home";
         }
       } else {
         localStorage.clear();
-        // firebase.auth().signOut();
+        firebase.auth().signOut();
         let cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
           let cookie = cookies[i];
@@ -56,7 +56,7 @@ class MainApp extends React.Component {
             "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000;path=/";
         }
         localStorage.clear();
-        // window.location.href = "http://localhost:3000/";
+        window.location.href = "http://localhost:3000/";
       }
     });
 
@@ -84,7 +84,7 @@ class MainApp extends React.Component {
       <Loading />
     ) : (
       <Fragment>
-        <Menu />
+        <Menu data={this.props} />
         <div className="max-w-80 m-auto" style={{ minHeight: "80vh" }}>
           {this.showContentMenus(Routes)}
         </div>

@@ -35,7 +35,7 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <IntlProvider locale="en">
+      <IntlProvider locale="de-DE">
         <Router>
           <Switch>
             <Route path="/" component={App} />

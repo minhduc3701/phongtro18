@@ -3,8 +3,29 @@ import { Link } from "react-router-dom";
 import { Avatar, Popover } from "antd";
 import { UserOutlined, PoweroffOutlined } from "@ant-design/icons";
 import webLogo from "../../assets/motel18-ver2.png";
+import firebase from "../../firebase";
 
 class Menu extends React.Component {
+  signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then((res) => {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i];
+          let eqPos = cookie.indexOf("=");
+          let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+        localStorage.clear();
+        this.props.data.history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const userMenu = (
       <ul className="ul-style">
@@ -14,11 +35,12 @@ class Menu extends React.Component {
             Hồ sơ cá nhân
           </Link>
         </li>
-        <li className="p-v-1-i cursor-pointer">
-          <Link style={{ color: "red" }}>
-            <PoweroffOutlined className="p-r-1" />
-            Đăng xuất
-          </Link>
+        <li
+          onClick={this.signOut}
+          className="p-v-1-i cursor-pointer color-danger"
+        >
+          <PoweroffOutlined className="p-r-1" />
+          Đăng xuất
         </li>
       </ul>
     );

@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import { Table, Input, Button, notification } from "antd";
-import { Link } from "react-router-dom";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { getRoomList } from "../../appRedux/actions";
 import { connect } from "react-redux";
 import CircularProgress from "../Loading/index";
 import firebase from "../../firebase/index";
+import { NumberFormat } from "../../util/NumberFormat";
 
 class Manager extends React.Component {
   constructor(props) {
@@ -68,6 +67,7 @@ class Manager extends React.Component {
                 roomId: room.id,
                 nameRoom: room.name,
                 bill: {
+                  price: room.price,
                   water: room.water * room.people,
                   lastElectrict: room.electrict,
                   newElectrict: parseInt(room.newElectrict),
@@ -130,7 +130,7 @@ class Manager extends React.Component {
         dataIndex: "price",
         key: "price",
         render: (key, roomList) => {
-          return <span>{roomList.price}</span>;
+          return <span>{NumberFormat(roomList.price)}</span>;
         },
       },
       {
@@ -138,7 +138,7 @@ class Manager extends React.Component {
         dataIndex: "price",
         key: "price",
         render: (key, roomList) => {
-          return <span>{roomList.water}</span>;
+          return <span>{NumberFormat(roomList.water)}</span>;
         },
       },
       {
@@ -146,7 +146,7 @@ class Manager extends React.Component {
         dataIndex: "internet",
         key: "internet",
         render: (key, roomList) => {
-          return <span>{roomList.internet}</span>;
+          return <span>{NumberFormat(roomList.internet)}</span>;
         },
       },
       {

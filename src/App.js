@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import FogotPassword from "./components/FogotPassword";
 import MainApp from "./MainApp";
 
 const RestrictedRoute = ({ component: Component, authUser, ...rest }) => (
@@ -31,6 +32,8 @@ class App extends React.Component {
         <Switch>
           <Route exact path={`/`} component={SignIn} />
           <Route exact path={`/signup`} component={SignUp} />
+          <Route exact path={`/forgot-password`} component={FogotPassword} />
+          <Route exact path={`/new-password`} component={FogotPassword} />
           <RestrictedRoute
             path={`${match.url}`}
             authUser={authUser}

@@ -18,7 +18,11 @@ const formItemLayout = {
 };
 
 class SingUp extends React.Component {
+  state = {
+    loading: false,
+  };
   handleSubmit = (values) => {
+    this.setState({ loading: true });
     firebase
       .auth()
       .createUserWithEmailAndPassword(values.email, values.confirm)
@@ -35,17 +39,20 @@ class SingUp extends React.Component {
           rId: "",
           rName: "",
           createdAt: new Date().toISOString(),
-          image: "",
+          image: [],
+          idCard: "",
+          deposit: 0,
         };
         firebase
           .firestore()
           .doc(`/users/${data.user.uid}`)
           .set(defaultUser)
           .then((res) => {
-            notification.success("Tạo tài khoản thành công!");
+            notification.success({ message: "Tạo tài khoản thành công!" });
           });
         firebase.auth().useDeviceLanguage();
         firebase.auth().currentUser.sendEmailVerification();
+        this.setState({ loading: false });
       })
       .catch((error) => {
         let err = "";
@@ -55,6 +62,7 @@ class SingUp extends React.Component {
         notification.error({
           message: err,
         });
+        this.setState({ loading: false });
       });
   };
 
@@ -179,7 +187,7 @@ class SingUp extends React.Component {
               />
             </FormItem>
             <p className="text-center">
-              Bạn đã có tài khoản? <Link to="/signin">Đăng nhập</Link>
+              Bạn đã có tài khoản? <Link to="/">Đăng nhập</Link>
             </p>
             <Button
               type="primary"
@@ -187,6 +195,7 @@ class SingUp extends React.Component {
               style={{ borderRadius: "1em" }}
               size="large"
               htmlType="submit"
+              loading={this.state.loading}
             >
               Đăng ký
             </Button>
