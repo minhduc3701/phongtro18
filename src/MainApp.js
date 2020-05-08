@@ -30,8 +30,8 @@ class MainApp extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         var id = document.cookie.match(
-          `(^|;) ? user_id = ([^;]*)(;|$)`
-          // "(^|;) ?" + "user_id" + "=([^;]*)(;|$)"
+          // `(^|;) ? user_id = ([^;]*)(;|$)`
+          "(^|;) ?" + "user_id" + "=([^;]*)(;|$)"
         ) || [""];
         let uid = id[2] || "null";
         if (user.uid !== uid) {
