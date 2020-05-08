@@ -57,7 +57,9 @@ class Manager extends React.Component {
       this.state.fileList.forEach((fileItem) => {
         firebase
           .storage()
-          .ref(`/${this.props.itemId}/${Date.now().toString()}`)
+          .ref(
+            `/${this.props.itemId}/${Date.now().toString()}/${fileItem.size}`
+          )
           .put(fileItem)
           .then((ress) => {
             if (ress) {

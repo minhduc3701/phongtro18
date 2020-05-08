@@ -28,10 +28,12 @@ export const getUser = () => {
       .then((res) => {
         let userList = [];
         res.forEach((doc) => {
-          userList.push({
-            id: doc.id,
-            name: doc.data().name,
-          });
+          if (doc.data().permission !== "admin") {
+            userList.push({
+              id: doc.id,
+              name: doc.data().name,
+            });
+          }
         });
         dispatch({
           type: GET_USER_LIST_SUCCESS,

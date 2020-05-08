@@ -1,15 +1,10 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, notification, Checkbox, Tooltip } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import userLogo from "../../assets/f93e57629c.png";
 import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
 import firebase from "../../firebase/index";
-// import {
-//   SIGNUP_USER_SUCCESS,
-//   SIGNUP_USER_START,
-//   SIGNUP_USER_ERROR,
-// } from "../../constants/ActionType";
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -20,6 +15,13 @@ const formItemLayout = {
 class SingUp extends React.Component {
   state = {
     loading: false,
+    hr: false,
+  };
+
+  onChangeHr = (e) => {
+    this.setState({
+      hr: e.target.checked,
+    });
   };
   handleSubmit = (values) => {
     this.setState({ loading: true });
@@ -34,7 +36,7 @@ class SingUp extends React.Component {
           address: "",
           phone: "",
           gender: "",
-          permission: "guest",
+          permission: this.state.hr ? "admin" : "guest",
           avatar: "",
           rId: "",
           rName: "",
@@ -49,6 +51,8 @@ class SingUp extends React.Component {
           .set(defaultUser)
           .then((res) => {
             notification.success({ message: "Tạo tài khoản thành công!" });
+            firebase.auth().signOut();
+            this.props.history.push("/");
           });
         firebase.auth().useDeviceLanguage();
         firebase.auth().currentUser.sendEmailVerification();
@@ -186,12 +190,17 @@ class SingUp extends React.Component {
                 placeholder="Confirm Password"
               />
             </FormItem>
-            <p className="text-center">
-              Bạn đã có tài khoản? <Link to="/">Đăng nhập</Link>
-            </p>
+
+            <div className="text-center">
+              <Tooltip title="Người tuyển dụng có thể sử dụng toàn bộ chức năng như admin">
+                <Checkbox onChange={this.onChangeHr}>
+                  Tôi là người tuyển dụng
+                </Checkbox>
+              </Tooltip>
+            </div>
             <Button
               type="primary"
-              className="w-100 m-v-3"
+              className="w-100 m-v-2"
               style={{ borderRadius: "1em" }}
               size="large"
               htmlType="submit"
@@ -199,6 +208,9 @@ class SingUp extends React.Component {
             >
               Đăng ký
             </Button>
+            <p className="text-center">
+              Bạn đã có tài khoản? <Link to="/">Đăng nhập</Link>
+            </p>
           </Form>
         </div>
       </Fragment>

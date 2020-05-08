@@ -45,72 +45,66 @@ class Manager extends React.Component {
   };
 
   onFinishBill = () => {
-    let fill = true;
     this.setState({
       loading: true,
     });
-    let roomList = this.state.room;
-    for (let i = 0; i < roomList.length; i++) {
-      if (roomList[i].newElectrict === undefined) {
-        fill = false;
-      }
-    }
-    {
-      this.state.room.length > 0 && fill
-        ? this.state.room.forEach((room) => {
-            firebase
-              .firestore()
-              .collection("bills")
-              .add({
-                userId: room.userId.id,
-                userName: room.userId.name,
-                roomId: room.id,
-                nameRoom: room.name,
-                bill: {
-                  price: room.price,
-                  water: room.water * room.people,
-                  lastElectrict: room.electrict,
-                  newElectrict: parseInt(room.newElectrict),
-                  internet: room.internet,
-                  motoElec: room.motoElec,
-                  type: "month",
-                  total:
-                    room.price +
-                    room.water * room.people +
-                    room.internet +
-                    room.motoElec * 100000 +
-                    (parseInt(room.newElectrict) - room.electrict) * 4000,
-                },
-                createdAt: new Date().toLocaleDateString(),
-              });
-            firebase
-              .firestore()
-              .collection("rooms")
-              .doc(room.id)
-              .update({
-                electrict: parseInt(room.newElectrict),
-              })
-              .then((res) => {
-                this.setState({
-                  countRoom: this.state.countRoom + 1,
-                });
-                if (this.state.countRoom === this.state.room.length) {
-                  this.props.getData(false);
-                  this.setState({
-                    loading: false,
-                  });
-                  notification.success({ message: "Thanh toán thành công!" });
-                }
-              });
+
+    if (this.state.room.length > 0) {
+      this.state.room.forEach((room) => {
+        firebase
+          .firestore()
+          .collection("bills")
+          .add({
+            userId: room.userId.id,
+            userName: room.userId.name,
+            roomId: room.id,
+            nameRoom: room.name,
+            bill: {
+              price: room.price,
+              water: room.water * room.people,
+              lastElectrict: room.electrict,
+              newElectrict: parseInt(room.newElectrict),
+              internet: room.internet,
+              motoElec: room.motoElec * 100000,
+              type: "month",
+              total:
+                room.price +
+                room.water * room.people +
+                room.internet +
+                room.motoElec * 100000 +
+                (parseInt(room.newElectrict) - room.electrict) * 4000,
+            },
+            createdAt: new Date().toLocaleDateString(),
+          });
+        firebase
+          .firestore()
+          .collection("rooms")
+          .doc(room.id)
+          .update({
+            electrict: parseInt(room.newElectrict),
           })
-        : setTimeout(() => {
-            this.setState({ loading: false });
-            notification.error({
-              message: "Thất bại!",
-              description:
-                "Nhập đẩy đủ số điện mới cho các phòng trước khi hoàn thiện!",
+          .then((res) => {
+            this.setState({
+              countRoom: this.state.countRoom + 1,
             });
-          }, 1000);
+            if (this.state.countRoom === this.state.room.length) {
+              this.props.getData(false);
+              this.setState({
+                loading: false,
+              });
+              notification.success({ message: "Thanh toán thành công!" });
+            }
+          });
+      });
+    } else {
+      setTimeout(() => {
+        this.setState({ loading: false });
+        notification.error({
+          message: "Thất bại!",
+          description:
+            "Nhập đẩy đủ số điện mới cho các phòng trước khi hoàn thiện!",
+        });
+      }, 1000);
     }
   };
 
@@ -174,7 +168,7 @@ class Manager extends React.Component {
           return (
             <span>
               <Input
-                style={{ border: 0 }}
+                style={{ border: 0, minWidth: 80 }}
                 className="border-none"
                 placeholder="Số điện mới"
                 type="number"
@@ -195,6 +189,8 @@ class Manager extends React.Component {
               columns={columns}
               dataSource={this.props.roomList}
               rowKey={(roomList) => roomList.id}
+              scroll={{ x: true }}
+              scrollToFirstRowOnChange={true}
             />
             <div className="d-flex justify-flex-end p-v-3">
               <Button

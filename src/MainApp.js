@@ -8,7 +8,6 @@ import { firestoreConnect, isLoaded } from "react-redux-firebase";
 import { connect } from "react-redux";
 import firebase from "./firebase/index";
 import Loading from "./components/Loading";
-import asyncComponent from "./asyncComponent";
 
 class MainApp extends React.Component {
   showContentMenus = (routes) => {
@@ -31,17 +30,18 @@ class MainApp extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         var id = document.cookie.match(
-          "(^|;) ?" + "user_id" + "=([^;]*)(;|$)"
+          `(^|;) ? user_id = ([^;]*)(;|$)`
+          // "(^|;) ?" + "user_id" + "=([^;]*)(;|$)"
         ) || [""];
         let uid = id[2] || "null";
         if (user.uid !== uid) {
-          // firebase.auth().signOut();
+          firebase.auth().signOut();
           localStorage.clear();
           document.cookie =
             "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
           document.cookie =
             "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
-          window.location.href = "http://localhost:3000/home";
+          window.location.href = "http://localhost:3000/";
         }
       } else {
         localStorage.clear();
@@ -59,7 +59,6 @@ class MainApp extends React.Component {
         window.location.href = "http://localhost:3000/";
       }
     });
-
     isLoaded(this.props.userApp) &&
       localStorage.setItem(
         "user_info",

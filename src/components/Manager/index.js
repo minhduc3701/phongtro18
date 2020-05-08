@@ -10,7 +10,7 @@ import {
   Popconfirm,
   notification,
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -133,9 +133,11 @@ class Manager extends React.Component {
 
   render() {
     let requests = [];
+    let userInfo = JSON.parse(localStorage.getItem("user_info"));
     isLoaded(this.props.roomList) &&
       this.props.roomList.forEach((doc) => {
         requests.push({
+          code: doc.code,
           id: doc.id,
           name: doc.name,
           userId: doc.userId,
@@ -158,7 +160,7 @@ class Manager extends React.Component {
               <div>
                 <Badge
                   className="m-b-0-i"
-                  count={requests.id}
+                  count={requests.code}
                   style={{ backgroundColor: "#008080", minWidth: 62 }}
                 />
                 <span className="text-grey d-block">
@@ -261,12 +263,20 @@ class Manager extends React.Component {
 
     return (
       <Fragment>
+        {userInfo.permission !== "admin" && <Redirect to="home" />}
         {!isLoaded(this.props.roomList) ? (
           <CircularProgress />
         ) : (
           <div style={{ padding: "5em 0" }}>
             <Row>
-              <Col className="p-3" xl={18} lg={18} md={24} sm={24} lg={24}>
+              <Col
+                className="p-3 d-flex"
+                xl={18}
+                lg={18}
+                md={24}
+                sm={24}
+                xs={24}
+              >
                 <Button
                   className="m-h-3 bor-rad-10"
                   style={{
@@ -302,6 +312,8 @@ class Manager extends React.Component {
               bordered={true}
               columns={columns}
               rowKey={(requests) => requests.id}
+              scroll={{ x: true }}
+              scrollToFirstRowOnChange={true}
             />
             {this.state.visibleBill ? (
               <Modal

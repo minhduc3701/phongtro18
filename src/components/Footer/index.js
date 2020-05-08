@@ -7,16 +7,21 @@ class Menu extends React.Component {
   render() {
     return (
       <footer
-        style={{
-          width: "100%",
-          height: "8em",
-        }}
+        // style={{
+        //   width: "100%",
+        //   height: "8em",
+        // }}
         className="d-flex align-center footer"
       >
         <Row className="w-80 m-auto">
           <Col className="block-center" xl={8} lg={8} md={12} sm={12} xs={12}>
             <Link to="/">
-              <img style={{ width: "8em" }} src={webLogo} alt="phong-tro-18" />
+              <img
+                src={webLogo}
+                style={{ maxHeight: "8em" }}
+                className="logo-foter"
+                alt="phong-tro-18"
+              />
             </Link>
           </Col>
           <Col className="block-center" xl={16} lg={16} md={12} sm={12} xs={12}>

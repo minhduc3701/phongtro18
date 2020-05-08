@@ -25,8 +25,9 @@ class SignIn extends React.Component {
   };
 
   componentWillMount() {
+    let userInfo = JSON.parse(localStorage.getItem("user_info"));
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user && user.emailVerified && userInfo) {
         this.props.history.push("/home");
         this.setState({
           checkUser: true,
@@ -46,6 +47,7 @@ class SignIn extends React.Component {
       .auth()
       .signInWithEmailAndPassword(values.user, values.password)
       .then((data) => {
+        console.log(data);
         if (data.user.emailVerified) {
           document.cookie = `user_id=${data.user.uid}`;
           localStorage.setItem("uid", data.user.uid);
@@ -90,11 +92,8 @@ class SignIn extends React.Component {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result);
         let token = result.credential.accessToken;
         let user = result.user;
-        console.log(token);
-        console.log(user);
         if (user) {
           document.cookie = `user_id=${user.uid}`;
           localStorage.setItem("uid", user.uid);

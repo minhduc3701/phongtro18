@@ -85,6 +85,7 @@ class Manager extends React.Component {
 
   render() {
     let { fileList } = this.state;
+    console.log(this.state);
     const props = {
       multiple: true,
       listType: "picture",

@@ -29,6 +29,7 @@ class Manager extends React.Component {
       pay: false,
       loading: false,
       loadingChange: false,
+      loadingPay: false,
       user: null,
     };
   }
@@ -70,18 +71,27 @@ class Manager extends React.Component {
         user: null,
       });
     } else if (values.userId !== "empty") {
-      {
-        this.props.roomDetail.status !== "empty" &&
-          firebase
-            .firestore()
-            .collection("users")
-            .where("rId", "==", this.props.itemId)
-            .update({
-              rId: "",
-              rName: "",
-              permission: "guest",
-              deposit: 0,
+      if (this.props.roomDetail.status !== "empty") {
+        firebase
+          .firestore()
+          .collection("users")
+          .where("rId", "==", this.props.itemId)
+          .update({
+            rId: "",
+            rName: "",
+            permission: "guest",
+            deposit: 0,
+          })
+          .catch((err) => {
+            console.log(err);
+            notification.error({
+              message: "Phòng đang có người thuê hãy thanh toán trước!",
             });
+            this.setState({
+              loadingChange: false,
+              user: null,
+            });
+          });
       }
 
       firebase
@@ -181,7 +191,7 @@ class Manager extends React.Component {
       let payElec =
         (parseInt(value.newElectrict) - this.props.roomDetail.electrict) * 4000;
       this.setState({
-        loading: true,
+        loadingPay: true,
       });
       firebase
         .firestore()
@@ -219,7 +229,7 @@ class Manager extends React.Component {
             lastElectrict: this.props.roomDetail.electrict,
             newElectrict: parseInt(value.newElectrict),
             internet: this.props.roomDetail.internet,
-            motoElec: this.props.roomDetail.motoElec,
+            motoElec: this.props.roomDetail.motoElec * 100000,
             type: "end",
             total:
               this.props.roomDetail.deposit -
@@ -237,7 +247,7 @@ class Manager extends React.Component {
           this.props.getData(false);
           setTimeout(() => {
             this.setState({
-              loading: false,
+              loadingPay: false,
             });
           }, 1000);
         })
@@ -461,7 +471,11 @@ class Manager extends React.Component {
                       <Button onClick={this.handleCancel} className="m-r-3">
                         Hủy
                       </Button>
-                      <Button htmlType="submit" type="primary">
+                      <Button
+                        loading={this.state.loadingPay}
+                        htmlType="submit"
+                        type="primary"
+                      >
                         Xác nhận
                       </Button>
                     </div>
@@ -473,6 +487,9 @@ class Manager extends React.Component {
               <div className="d-flex justify-flex-end">
                 <Button
                   className="m-r-3"
+                  disabled={
+                    this.props.roomDetail.status === "empty" ? false : true
+                  }
                   onClick={this.onChangeUser}
                   type="danger"
                 >

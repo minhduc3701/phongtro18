@@ -84,7 +84,7 @@ class Menu extends React.Component {
             <Row>
               {roomDetail.item.map((item, index) => {
                 return (
-                  <Col key={index} xl={12} lg={12} md={12} sm={24} lg={24}>
+                  <Col key={index} xl={12} lg={12} md={12} sm={24} xs={24}>
                     <h4>
                       <CheckCircleOutlined /> {this.textItem(item)}
                     </h4>
@@ -131,11 +131,12 @@ class Menu extends React.Component {
                     lg={6}
                     md={16}
                     sm={24}
-                    lg={24}
+                    xs={24}
                   >
                     <img
                       onClick={() => this.onPreview(item.url)}
                       className="w-100 object-fit-cover cursor-pointer"
+                      style={{ height: "20em" }}
                       src={item.url}
                       alt={item.name}
                     />
@@ -154,7 +155,7 @@ class Menu extends React.Component {
         >
           <img
             src={this.state.previewImage}
-            alt="image-preview"
+            alt="preview"
             style={{ width: "100%" }}
           />
         </Modal>

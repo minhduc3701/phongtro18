@@ -38,6 +38,10 @@ class Manager extends React.Component {
       .firestore()
       .collection("rooms")
       .add({
+        code: (
+          Math.random().toString(36).substring(2, 4) +
+          Math.random().toString(36).substring(2, 6)
+        ).toUpperCase(),
         name: values.name,
         acreage: values.acreage,
         toilet: values.toilet,
@@ -59,40 +63,41 @@ class Manager extends React.Component {
         this.state.fileList.forEach((fileItem) => {
           firebase
             .storage()
-            .ref(`/${res.id}/${Date.now().toString()}`)
+            .ref(`/${res.id}/${Date.now().toString()}/${fileItem.size}}`)
             .put(fileItem)
             .then((ress) => {
-              if (ress) {
-                firebase
-                  .storage()
-                  .ref(ress.metadata.fullPath)
-                  .getDownloadURL()
-                  .then((url) => {
-                    firebase
-                      .firestore()
-                      .collection("rooms")
-                      .doc(res.id)
-                      .update({
-                        image: firebase.firestore.FieldValue.arrayUnion({
-                          url: url,
-                          name: fileItem.name,
-                        }),
-                      })
-                      .then((res) => {
-                        this.setState({
-                          uploadImage: this.state.uploadImage + 1,
-                        });
-                        if (
-                          this.state.uploadImage === this.state.fileList.length
-                        ) {
-                          this.props.getData(false);
-                          notification.success({
-                            message: "Tạo phòng thành công!",
-                          });
-                        }
+              firebase
+                .storage()
+                .ref(ress.metadata.fullPath)
+                .getDownloadURL()
+                .then((url) => {
+                  firebase
+                    .firestore()
+                    .collection("rooms")
+                    .doc(res.id)
+                    .update({
+                      image: firebase.firestore.FieldValue.arrayUnion({
+                        url: url,
+                        name: fileItem.name,
+                      }),
+                    })
+                    .then((res) => {
+                      this.setState({
+                        uploadImage: this.state.uploadImage + 1,
                       });
-                  });
-              }
+                      if (
+                        this.state.uploadImage === this.state.fileList.length
+                      ) {
+                        this.props.getData(false);
+                        notification.success({
+                          message: "Tạo phòng thành công!",
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                });
             });
         });
       })

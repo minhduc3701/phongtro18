@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import webLogo from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
@@ -78,7 +77,7 @@ class Menu extends React.Component {
                 src={webLogo}
                 alt="phong-tro-18"
                 className="w-100 object-fit-cover"
-                style={{ maxHeight: "22em" }}
+                style={{ height: "100%", maxHeight: "22em" }}
               />
               <h2 className="text-center font-weight-bold">
                 <InfoCircleOutlined style={{ color: "#c10000" }} /> Phòng chỉ
@@ -91,7 +90,7 @@ class Menu extends React.Component {
                 src={webLogo}
                 alt="phong-tro-18"
                 className="w-100 object-fit-cover"
-                style={{ maxHeight: "22em" }}
+                style={{ height: "100%", maxHeight: "22em" }}
               />
               <h2 className="text-center font-weight-bold">
                 Khu vực trung tâm - Thuận tiện đi lại

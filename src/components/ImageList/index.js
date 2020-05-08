@@ -1,10 +1,8 @@
 import React, { Fragment } from "react";
 import { Row, Col, Modal } from "antd";
-import webLogo from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
 import { getImageList } from "../../appRedux/actions";
 import { connect } from "react-redux";
 import Loading from "../Loading";
-import { Link } from "react-router-dom";
 
 class ImageList extends React.Component {
   constructor(props) {
@@ -46,12 +44,13 @@ class ImageList extends React.Component {
                         xl={6}
                         lg={6}
                         md={12}
-                        sm={24}
-                        lg={24}
+                        sm={12}
+                        xs={24}
                       >
                         <img
                           onClick={() => this.onPreview(image.url)}
                           className="w-100 object-fit-cover cursor-pointer"
+                          style={{ height: "16em" }}
                           src={image.url}
                           alt={image.name}
                         />
@@ -70,7 +69,7 @@ class ImageList extends React.Component {
             >
               <img
                 src={this.state.previewImage}
-                alt="image-preview"
+                alt="preview"
                 style={{ width: "100%" }}
               />
             </Modal>
