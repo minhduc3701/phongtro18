@@ -6,7 +6,7 @@ class Menu extends React.Component {
   render() {
     let { data } = this.props;
     return (
-      <div className="block">
+      <div className="block" style={{ backgroundColor: "#fff" }}>
         <Row>
           <Col xl={8} lg={8} md={24} sm={24} xs={24}>
             <img

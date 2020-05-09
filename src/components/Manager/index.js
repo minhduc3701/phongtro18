@@ -263,7 +263,10 @@ class Manager extends React.Component {
 
     return (
       <Fragment>
-        {userInfo.permission !== "admin" && <Redirect to="home" />}
+        <h2 className="p-t-5 text-center font-weight-bold text-upper m-0">
+          Quản lý
+        </h2>
+        {userInfo.permission !== "admin" && <Redirect to="/home" />}
         {!isLoaded(this.props.roomList) ? (
           <CircularProgress />
         ) : (

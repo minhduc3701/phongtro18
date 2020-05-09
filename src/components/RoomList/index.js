@@ -13,6 +13,9 @@ class Menu extends React.Component {
   render() {
     return (
       <div className="p-v-5">
+        <h2 className="p-v-4 text-center font-weight-bold text-upper">
+          Danh sách phòng
+        </h2>
         {!this.props.loadRoomList ? (
           <Row>
             {this.props.roomList.map((item, index) => {

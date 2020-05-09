@@ -1,7 +1,13 @@
 import React from "react";
 import { Row, Col } from "antd";
 import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import webLogo from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
+import image1 from "../../assets/2-people-with-posters-vector.jpg";
+import image2 from "../../assets/20190502_093905_4352542_0.jpg";
+import image3 from "../../assets/a5884193881166612c87006037b801db.jpg";
+import image4 from "../../assets/data=WqybVK9MH3HPpFKKGG3RkRuzRi0g255BdpQdfGLLNpn-j5G8XMLP5YTF8_l3PI-cjA6lC2Vo8bVH9Xcy5xQmjsKaLfKSJaZJ4CKd3xOXoREpfV9MkseeeGRLtE6qZrTIdbGVihtD-wpOWn1XGWj3NLSizIS59ZpKYyuqZrr_fN32WLgQM3SDdepO.png";
+import image5 from "../../assets/60023608_2407862295939930_1750004065640644608_o.jpg";
+import image6 from "../../assets/23755198_1697584746967692_8729631740302018788_n.jpg";
+import imageHead from "../../assets/83049376_2895136440545844_6377501413462769664_o.jpg";
 
 class Menu extends React.Component {
   render() {
@@ -14,13 +20,14 @@ class Menu extends React.Component {
           <h3 className="text-center">
             Địa chỉ: Số 18 ngách 7 ngõ 260 Phố chợ Khâm Thiên, Đống Đa, Hà nội
           </h3>
-          <h2 className="text-center">Liên hệ: 038 9870074 - 088 8272332</h2>
+          <h2 className="text-center">Liên hệ: 0888 272332</h2>
+          <h3 className="text-center">Email: minh.duc.3701@gmail.com</h3>
         </div>
         <div>
           <img
             style={{ maxHeight: "40em" }}
             className="w-100 h-100 object-fit-cover"
-            src={webLogo}
+            src={imageHead}
             alt="phong-tro-18"
           />
         </div>
@@ -28,8 +35,9 @@ class Menu extends React.Component {
           <Row>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
               <img
-                src={webLogo}
+                src={image6}
                 alt="phong-tro-18"
+                style={{ height: "100%", maxHeight: "22em" }}
                 className="w-100 object-fit-cover"
               />
               <h2 className="text-center">
@@ -39,8 +47,9 @@ class Menu extends React.Component {
             </Col>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
               <img
-                src={webLogo}
+                src={image2}
                 alt="phong-tro-18"
+                style={{ height: "100%", maxHeight: "22em" }}
                 className="w-100 object-fit-cover"
               />
               <h2 className="text-center">
@@ -50,8 +59,9 @@ class Menu extends React.Component {
             </Col>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
               <img
-                src={webLogo}
+                src={image5}
                 alt="phong-tro-18"
+                style={{ height: "100%", maxHeight: "22em" }}
                 className="w-100 object-fit-cover"
               />
               <h2 className="text-center">
@@ -61,8 +71,9 @@ class Menu extends React.Component {
             </Col>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
               <img
-                src={webLogo}
+                src={image3}
                 alt="phong-tro-18"
+                style={{ height: "100%", maxHeight: "22em" }}
                 className="w-100 object-fit-cover"
               />
               <h2 className="text-center">
@@ -74,7 +85,7 @@ class Menu extends React.Component {
           <Row className="p-t-5">
             <Col className="p-3" xl={8} lg={8} md={24} sm={24} xs={24}>
               <img
-                src={webLogo}
+                src={image1}
                 alt="phong-tro-18"
                 className="w-100 object-fit-cover"
                 style={{ height: "100%", maxHeight: "22em" }}
@@ -87,7 +98,7 @@ class Menu extends React.Component {
             </Col>
             <Col className="p-3" xl={16} lg={16} md={24} sm={24} xs={24}>
               <img
-                src={webLogo}
+                src={image4}
                 alt="phong-tro-18"
                 className="w-100 object-fit-cover"
                 style={{ height: "100%", maxHeight: "22em" }}

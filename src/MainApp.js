@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
@@ -30,7 +30,6 @@ class MainApp extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         var id = document.cookie.match(
-          // `(^|;) ? user_id = ([^;]*)(;|$)`
           "(^|;) ?" + "user_id" + "=([^;]*)(;|$)"
         ) || [""];
         let uid = id[2] || "null";
@@ -82,13 +81,13 @@ class MainApp extends React.Component {
     return !isLoaded(this.props.userApp) ? (
       <Loading />
     ) : (
-      <Fragment>
+      <div style={{ backgroundColor: "#F8F9F9" }}>
         <Menu data={this.props} />
         <div className="max-w-80 m-auto" style={{ minHeight: "80vh" }}>
           {this.showContentMenus(Routes)}
         </div>
         <Footer />
-      </Fragment>
+      </div>
     );
   }
 }

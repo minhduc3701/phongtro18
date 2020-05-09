@@ -2152,7 +2152,7 @@ hr {
 
 .gx-link:hover {
   cursor: pointer;
-  color: #f2af58;
+  color: #f2af58 !important;
 }
 
 .list-style-none {

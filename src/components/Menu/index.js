@@ -95,6 +95,7 @@ class MenuHeader extends React.Component {
           width: "100%",
           borderBottom: "3px solid #f2af58",
           height: "6em",
+          backgroundColor: "#2C3E50",
         }}
         className="d-flex align-center"
       >
@@ -150,30 +151,30 @@ class MenuHeader extends React.Component {
                 <div className="menu-items">
                   <Link
                     to="/home"
-                    style={{ fontSize: "1.2em" }}
-                    className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
+                    style={{ fontSize: "1.2em", color: "#fff" }}
+                    className="text-upper h-100 p-h-3 font-weight-bold gx-link"
                   >
                     Trang chủ
                   </Link>
                   <Link
                     to="/room-list"
-                    style={{ fontSize: "1.2em" }}
-                    className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
+                    style={{ fontSize: "1.2em", color: "#fff" }}
+                    className="text-upper h-100 p-h-3 font-weight-bold gx-link"
                   >
                     Danh sách phòng
                   </Link>
                   <Link
                     to="/image-list"
-                    style={{ fontSize: "1.2em" }}
-                    className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
+                    style={{ fontSize: "1.2em", color: "#fff" }}
+                    className="text-upper h-100 p-h-3 font-weight-bold gx-link"
                   >
                     Hình ảnh
                   </Link>
                   {userInfo.permission === "admin" && (
                     <Link
                       to="/management"
-                      style={{ fontSize: "1.2em" }}
-                      className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
+                      style={{ fontSize: "1.2em", color: "#fff" }}
+                      className="text-upper h-100 p-h-3 font-weight-bold gx-link"
                     >
                       Quản lý
                     </Link>
