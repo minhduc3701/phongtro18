@@ -37,10 +37,10 @@ class MainApp extends React.Component {
           firebase.auth().signOut();
           localStorage.clear();
           document.cookie =
-            "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
+            "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://cv-phongtro18.freevnn.com/";
           document.cookie =
-            "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000";
-          window.location.href = "http://localhost:3000/";
+            "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://cv-phongtro18.freevnn.com/";
+          window.location.href = "http://cv-phongtro18.freevnn.com//";
         }
       } else {
         localStorage.clear();
@@ -52,10 +52,10 @@ class MainApp extends React.Component {
           let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
           document.cookie =
             name +
-            "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=http://localhost:3000;path=/";
+            "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=http://cv-phongtro18.freevnn.com/;path=/";
         }
         localStorage.clear();
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "http://cv-phongtro18.freevnn.com//";
       }
     });
     isLoaded(this.props.userApp) &&

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Input, notification } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com.jpg";
+import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com-min.jpg";
 import firebase from "../../firebase/index";
 
 const FormItem = Form.Item;
@@ -20,7 +20,7 @@ class SignIn extends React.Component {
   handleSubmit = (values) => {
     this.setState({ loading: true });
     let actionCodeSetting = {
-      url: "http://localhost:3000/",
+      url: "http://cv-phongtro18.freevnn.com/",
       handleCodeInApp: true,
     };
     firebase.auth().useDeviceLanguage();
