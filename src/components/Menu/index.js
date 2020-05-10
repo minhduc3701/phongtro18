@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Popover, Dropdown, Menu, Row, Col } from "antd";
 import { UserOutlined, PoweroffOutlined } from "@ant-design/icons";
-import webLogo from "../../assets/motel18-ver2.png";
+import webLogo from "../../assets/motel18-ver2-min.png";
 import firebase from "../../firebase";
 
 class MenuHeader extends React.Component {

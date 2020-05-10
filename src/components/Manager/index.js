@@ -273,7 +273,7 @@ class Manager extends React.Component {
           <div style={{ padding: "5em 0" }}>
             <Row>
               <Col
-                className="p-3 d-flex"
+                className="p-3 d-flex-i"
                 xl={18}
                 lg={18}
                 md={24}

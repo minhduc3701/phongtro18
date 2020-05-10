@@ -7,7 +7,7 @@ import {
   FacebookOutlined,
   GoogleOutlined,
 } from "@ant-design/icons";
-import userLogo from "../../assets/f93e57629c.png";
+import userLogo from "../../assets/f93e57629c-min.png";
 import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com-min.jpg";
 import firebase from "../../firebase/index";
 import Loading from "../Loading";

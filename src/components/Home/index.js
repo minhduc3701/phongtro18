@@ -4,7 +4,7 @@ import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import image1 from "../../assets/2-people-with-posters-vector-min.jpg";
 import image2 from "../../assets/20190502_093905_4352542_0-min.jpg";
 import image3 from "../../assets/a5884193881166612c87006037b801db-min.jpg";
-import image4 from "../../assets/data=WqybVK9MH3HPpFKKGG3RkRuzRi0g255BdpQdfGLLNpn-j5G8XMLP5YTF8_l3PI-cjA6lC2Vo8bVH9Xcy5xQmjsKaLfKSJaZJ4CKd3xOXoREpfV9MkseeeGRLtE6qZrTIdbGVihtD-wpOWn1XGWj3NLSizIS59ZpKYyuqZrr_fN32WLgQM3SDdepO.png";
+import image4 from "../../assets/data=WqybVK9MH3HPpFKKGG3RkRuzRi0g255BdpQdfGLLNpn-j5G8XMLP5YTF8_l3PI-cjA6lC2Vo8bVH9Xcy5xQmjsKaLfKSJaZJ4CKd3xOXoREpfV9MkseeeGRLtE6qZrTIdbGVihtD-wpOWn1XGWj3NLSizIS59ZpKYyuqZrr_fN32WLgQM3SDdepO-min.png";
 import image5 from "../../assets/60023608_2407862295939930_1750004065640644608_o-min.jpg";
 import image6 from "../../assets/23755198_1697584746967692_8729631740302018788_n-min.jpg";
 import imageHead from "../../assets/83049376_2895136440545844_6377501413462769664_o-min.jpg";

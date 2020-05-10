@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Input, notification, Checkbox, Tooltip } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import userLogo from "../../assets/f93e57629c.png";
+import userLogo from "../../assets/f93e57629c-min.png";
 import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com-min.jpg";
 import firebase from "../../firebase/index";
 

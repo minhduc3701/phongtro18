@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
-import webLogo from "../../assets/motel18-ver2.png";
+import webLogo from "../../assets/motel18-ver2-min.png";
 
 class Menu extends React.Component {
   render() {
