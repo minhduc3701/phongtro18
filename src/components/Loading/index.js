@@ -1,5 +1,5 @@
 import React from "react";
-import loader from "../../assets/Infinity-1.4s-200px.svg";
+import loader from "../../assets/Infinity.svg";
 
 const CircularProgress = ({ className }) => (
   <div className={`loader ${className}`}>
