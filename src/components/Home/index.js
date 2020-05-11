@@ -22,6 +22,16 @@ class Menu extends React.Component {
           </h3>
           <h2 className="text-center">Liên hệ: 0888 272332</h2>
           <h3 className="text-center">Email: minh.duc.3701@gmail.com</h3>
+          <p className="text-center">
+            Thông tin chi tiết dự án (Design layout, Phân tích chức năng, Cấu
+            trúc cơ sở dữ liệu, Mã nguồn) :{" "}
+            <a
+              href="https://drive.google.com/drive/folders/1jf2ZjUF0uJJ_DbJxTAdEKb76gpxe_JUB"
+              target="__blank"
+            >
+              Tại đây
+            </a>
+          </p>
         </div>
         <div>
           <img
