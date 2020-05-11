@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import {
   UserOutlined,
   LockOutlined,
-  FacebookOutlined,
-  GoogleOutlined,
+  // FacebookOutlined,
+  // GoogleOutlined,
 } from "@ant-design/icons";
 import userLogo from "../../assets/f93e57629c-min.png";
 import background from "../../assets/hiking-mountain-hike-climber-adventure-tourist-1433419-pxhere.com-min.jpg";
@@ -154,7 +154,7 @@ class SignIn extends React.Component {
                 transform: "translate(-50%,-50%)",
                 flexDirection: "column",
                 maxWidth: "30em",
-                maxHeight: "40em",
+                maxHeight: "33em",
                 width: "100%",
                 height: "100%",
               }}
@@ -165,7 +165,7 @@ class SignIn extends React.Component {
                 className="bor-rad-50"
                 style={{ width: "10em", height: "10em" }}
               />
-              <h3 className="text-center font-weight-bold p-b-2">Đăng nhập</h3>
+              <h3 className="text-center font-weight-bold ">Đăng nhập</h3>
               <Form onFinish={this.handleSubmit} style={{ width: "25em" }}>
                 <span>Tên đăng nhập</span>
                 <FormItem
@@ -220,7 +220,7 @@ class SignIn extends React.Component {
                 </Button>
               </Form>
 
-              <Row className="p-t-5">
+              {/* <Row className="p-t-5">
                 <Col xl={12} lg={12} md={12} sm={24} xs={24}>
                   <div
                     onClick={this.signInWithGG}
@@ -243,8 +243,8 @@ class SignIn extends React.Component {
                     <span>Đăng nhập bằng Facebook</span>
                   </div>
                 </Col>
-              </Row>
-              <Link to="/signup" className="m-l-auto p-t-3">
+              </Row> */}
+              <Link to="/signup" className="m-l-auto p-t-2">
                 Đăng ký
               </Link>
             </div>

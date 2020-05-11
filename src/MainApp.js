@@ -40,7 +40,7 @@ class MainApp extends React.Component {
             "b2b_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://cv-phongtro18.freevnn.com/";
           document.cookie =
             "user_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;domain=http://cv-phongtro18.freevnn.com/";
-          window.location.href = "http://cv-phongtro18.freevnn.com//";
+          window.location.href = "http://cv-phongtro18.freevnn.com/";
         }
       } else {
         localStorage.clear();
@@ -55,7 +55,7 @@ class MainApp extends React.Component {
             "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=http://cv-phongtro18.freevnn.com/;path=/";
         }
         localStorage.clear();
-        window.location.href = "http://cv-phongtro18.freevnn.com//";
+        window.location.href = "http://cv-phongtro18.freevnn.com/";
       }
     });
     isLoaded(this.props.userApp) &&
