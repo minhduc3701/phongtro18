@@ -4,12 +4,22 @@ import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import image1 from "../../assets/2-people-with-posters-vector-min.jpg";
 import image2 from "../../assets/20190502_093905_4352542_0-min.jpg";
 import image3 from "../../assets/a5884193881166612c87006037b801db-min.jpg";
-import image4 from "../../assets/map-min.jpg";
+// import image4 from "../../assets/map-min.jpg";
 import image5 from "../../assets/60023608_2407862295939930_1750004065640644608_o-min.jpg";
 import image6 from "../../assets/23755198_1697584746967692_8729631740302018788_n-min.jpg";
 import imageHead from "../../assets/83049376_2895136440545844_6377501413462769664_o-min.jpg";
+import GoogleMapReact from "google-map-react";
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Menu extends React.Component {
+  static defaultProps = {
+    center: {
+      lat: 21.01421,
+      lng: 105.836759,
+    },
+    zoom: 17,
+  };
   render() {
     return (
       <div>
@@ -105,7 +115,7 @@ class Menu extends React.Component {
                   src={image1}
                   alt="phong-tro-18"
                   className="w-100 object-fit-cover"
-                  style={{ height: "100%", maxHeight: "22em" }}
+                  style={{ height: "100%", height: "21em" }}
                 />
                 <h2 className="text-center font-weight-bold">
                   <InfoCircleOutlined style={{ color: "#c10000" }} /> Phòng chỉ
@@ -115,13 +125,27 @@ class Menu extends React.Component {
               </div>
             </Col>
             <Col className="p-3" xl={16} lg={16} md={24} sm={24} xs={24}>
-              <div>
-                <img
+              <div className="w-100 h-100" style={{ height: "21em" }}>
+                <GoogleMapReact
+                  bootstrapURLKeys={{
+                    key: "AIzaSyAUFbafdP4VqW1U8-tMtSL2v-pZ5EBxcUw",
+                  }}
+                  defaultCenter={this.props.center}
+                  defaultZoom={this.props.zoom}
+                >
+                  <AnyReactComponent
+                    lat={21.01421}
+                    lng={105.836759}
+                    text="My Marker"
+                  />
+                </GoogleMapReact>
+                {/* <img
                   src={image4}
                   alt="phong-tro-18"
                   className="w-100 object-fit-cover"
                   style={{ height: "100%", maxHeight: "22em" }}
                 />
+                 */}
                 <h2 className="text-center font-weight-bold">
                   Khu vực trung tâm - Thuận tiện đi lại
                 </h2>
