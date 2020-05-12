@@ -33,7 +33,7 @@ class Menu extends React.Component {
             </a>
           </p>
         </div>
-        <div>
+        <div className="m-b-3">
           <img
             style={{ maxHeight: "40em" }}
             className="w-100 h-100 object-fit-cover"
@@ -41,81 +41,91 @@ class Menu extends React.Component {
             alt="phong-tro-18"
           />
         </div>
-        <div className=" p-v-5">
+        <div style={{ marginBottom: "3em" }}>
           <Row>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
-              <img
-                src={image6}
-                alt="phong-tro-18"
-                style={{ height: "100%", maxHeight: "22em" }}
-                className="w-100 object-fit-cover"
-              />
-              <h2 className="text-center">
-                <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Phòng khép
-                kín sạch sẽ
-              </h2>
+              <div>
+                <img
+                  src={image6}
+                  alt="phong-tro-18"
+                  style={{ height: "100%", maxHeight: "22em" }}
+                  className="w-100 object-fit-cover"
+                />
+                <h2 className="text-center">
+                  <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Phòng
+                  khép kín sạch sẽ
+                </h2>
+              </div>
             </Col>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
-              <img
-                src={image2}
-                alt="phong-tro-18"
-                style={{ height: "100%", maxHeight: "22em" }}
-                className="w-100 object-fit-cover"
-              />
-              <h2 className="text-center">
-                <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Khu vực gần
-                chợ thuận tiện sinh hoạt
-              </h2>
+              <div>
+                <img
+                  src={image2}
+                  alt="phong-tro-18"
+                  style={{ height: "100%", maxHeight: "22em" }}
+                  className="w-100 object-fit-cover"
+                />
+                <h2 className="text-center text-ellipsis-2">
+                  <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Khu vực
+                  gần chợ thuận tiện sinh hoạt
+                </h2>
+              </div>
             </Col>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
-              <img
-                src={image5}
-                alt="phong-tro-18"
-                style={{ height: "100%", maxHeight: "22em" }}
-                className="w-100 object-fit-cover"
-              />
-              <h2 className="text-center">
-                <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Có tủ quần
-                áo, đệm, giường hộp... tùy theo từng phòng
-              </h2>
+              <div>
+                <img
+                  src={image5}
+                  alt="phong-tro-18"
+                  style={{ height: "100%", maxHeight: "22em" }}
+                  className="w-100 object-fit-cover"
+                />
+                <h2 className="text-center">
+                  <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Có tủ
+                  quần áo, đệm, giường hộp... tùy theo từng phòng
+                </h2>
+              </div>
             </Col>
             <Col className="p-3" xl={12} lg={12} md={24} sm={24} xs={24}>
-              <img
-                src={image3}
-                alt="phong-tro-18"
-                style={{ height: "100%", maxHeight: "22em" }}
-                className="w-100 object-fit-cover"
-              />
-              <h2 className="text-center">
-                <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Đầy đủ điều
-                hòa, nóng lạnh, Chỗ để xem miễn phí
-              </h2>
+              <div>
+                <img
+                  src={image3}
+                  alt="phong-tro-18"
+                  style={{ height: "100%", maxHeight: "22em" }}
+                  className="w-100 object-fit-cover"
+                />
+                <h2 className="text-center">
+                  <CheckCircleOutlined style={{ color: "#1daf1d" }} /> Đầy đủ
+                  điều hòa, nóng lạnh, Chỗ để xem miễn phí
+                </h2>
+              </div>
             </Col>
-          </Row>
-          <Row className="p-t-5">
             <Col className="p-3" xl={8} lg={8} md={24} sm={24} xs={24}>
-              <img
-                src={image1}
-                alt="phong-tro-18"
-                className="w-100 object-fit-cover"
-                style={{ height: "100%", maxHeight: "22em" }}
-              />
-              <h2 className="text-center font-weight-bold">
-                <InfoCircleOutlined style={{ color: "#c10000" }} /> Phòng chỉ
-                dành cho 1 - 2 người{" "}
-                <InfoCircleOutlined style={{ color: "#c10000" }} />
-              </h2>
+              <div>
+                <img
+                  src={image1}
+                  alt="phong-tro-18"
+                  className="w-100 object-fit-cover"
+                  style={{ height: "100%", maxHeight: "22em" }}
+                />
+                <h2 className="text-center font-weight-bold">
+                  <InfoCircleOutlined style={{ color: "#c10000" }} /> Phòng chỉ
+                  dành cho 1 - 2 người{" "}
+                  <InfoCircleOutlined style={{ color: "#c10000" }} />
+                </h2>
+              </div>
             </Col>
             <Col className="p-3" xl={16} lg={16} md={24} sm={24} xs={24}>
-              <img
-                src={image4}
-                alt="phong-tro-18"
-                className="w-100 object-fit-cover"
-                style={{ height: "100%", maxHeight: "22em" }}
-              />
-              <h2 className="text-center font-weight-bold">
-                Khu vực trung tâm - Thuận tiện đi lại
-              </h2>
+              <div>
+                <img
+                  src={image4}
+                  alt="phong-tro-18"
+                  className="w-100 object-fit-cover"
+                  style={{ height: "100%", maxHeight: "22em" }}
+                />
+                <h2 className="text-center font-weight-bold">
+                  Khu vực trung tâm - Thuận tiện đi lại
+                </h2>
+              </div>
             </Col>
           </Row>
         </div>

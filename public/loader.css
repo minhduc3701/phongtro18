@@ -2267,6 +2267,10 @@ hr {
   border-right: 1px solid #ccc;
 }
 
+.block-margin {
+  margin-bottom: 0.6em;
+}
+
 @media screen and (max-width: 1024px) {
   .menu-items {
     display: none;
@@ -2282,6 +2286,9 @@ hr {
   }
   .profile__border-right {
     border-right: 0;
+  }
+  .block-margin {
+    margin-bottom: 1em;
   }
 }
 /*# sourceMappingURL=loader.css.map */

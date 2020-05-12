@@ -19,7 +19,7 @@ class MenuHeader extends React.Component {
           document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
         }
         localStorage.clear();
-        // this.props.data.history.push("/");
+        this.props.data.history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -107,7 +107,7 @@ class MenuHeader extends React.Component {
                   <div className="sub-menu m-r-3 cursor-pointer">
                     <div
                       style={{
-                        background: "black",
+                        background: "#fff",
                         width: 13,
                         height: 2,
                         marginBottom: 2,
@@ -115,7 +115,7 @@ class MenuHeader extends React.Component {
                     ></div>
                     <div
                       style={{
-                        background: "black",
+                        background: "#fff",
                         width: 13,
                         height: 2,
                         marginBottom: 2,
@@ -123,7 +123,7 @@ class MenuHeader extends React.Component {
                     ></div>
                     <div
                       style={{
-                        background: "black",
+                        background: "#fff",
                         width: 13,
                         height: 2,
                         marginBottom: 2,

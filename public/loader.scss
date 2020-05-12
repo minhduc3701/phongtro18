@@ -2077,6 +2077,9 @@ hr {
 .profile__border-right {
   border-right: 1px solid #ccc;
 }
+.block-margin {
+  margin-bottom: 0.6em;
+}
 
 //[media]
 
@@ -2095,5 +2098,8 @@ hr {
   }
   .profile__border-right {
     border-right: 0;
+  }
+  .block-margin {
+    margin-bottom: 1em;
   }
 }
