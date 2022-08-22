@@ -41,7 +41,7 @@ class MenuHeader extends React.Component {
           className="p-v-1-i cursor-pointer color-danger"
         >
           <PoweroffOutlined className="p-r-1" />
-          Đăng xuấtttttttttttttttt
+          Đăng xuất
         </li>
       </ul>
     );
