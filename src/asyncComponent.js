@@ -39,6 +39,7 @@ export default function asyncComponent(importComponent) {
       return (
         <ReactPlaceholder type="text" rows={7} ready={Component !== null}>
           {Component}
+          <span>ddmkz</span>
         </ReactPlaceholder>
       );
     }
