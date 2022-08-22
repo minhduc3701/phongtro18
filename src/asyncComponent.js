@@ -39,7 +39,6 @@ export default function asyncComponent(importComponent) {
       return (
         <ReactPlaceholder type="text" rows={7} ready={Component !== null}>
           {Component}
-          <h1>1111</h1>
         </ReactPlaceholder>
       );
     }
