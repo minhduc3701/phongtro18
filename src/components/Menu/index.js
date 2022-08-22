@@ -72,7 +72,7 @@ class MenuHeader extends React.Component {
             style={{ fontSize: "1.2em" }}
             className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
           >
-            Hình ảnhhhh
+            Hình ảnh...
           </Link>
         </Menu.Item>
         {userInfo.permission === "admin" && (
