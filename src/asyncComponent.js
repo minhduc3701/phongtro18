@@ -35,10 +35,10 @@ export default function asyncComponent(importComponent) {
     }
 
     render() {
-      const Component = this.state.component || <CircularProgress />;
+      const Comp = this.state.component || <CircularProgress />;
       return (
-        <ReactPlaceholder type="text" rows={7} ready={Component !== null}>
-          {Component}
+        <ReactPlaceholder type="text" rows={7} ready={Comp !== null}>
+          {Comp}
         </ReactPlaceholder>
       );
     }
