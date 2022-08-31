@@ -41,7 +41,7 @@ class MenuHeader extends React.Component {
           className="p-v-1-i cursor-pointer color-danger"
         >
           <PoweroffOutlined className="p-r-1" />
-          Đăng xuấttt
+          Đăng xuấtt
         </li>
       </ul>
     );
@@ -54,7 +54,7 @@ class MenuHeader extends React.Component {
             style={{ fontSize: "1.2em" }}
             className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
           >
-            Trang chủuuuuu
+            Trang chủ
           </Link>
         </Menu.Item>
         <Menu.Item key="1">
@@ -72,7 +72,7 @@ class MenuHeader extends React.Component {
             style={{ fontSize: "1.2em" }}
             className="text-grey menu-hover text-upper h-100 p-h-3 font-weight-bold gx-link"
           >
-            Hình ảnhhhhhhh
+            Hình ảnh
           </Link>
         </Menu.Item>
         {userInfo.permission === "admin" && (
